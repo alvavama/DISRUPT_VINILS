@@ -299,34 +299,23 @@ button {
     object-fit: cover;
 }
 
-/* El contenedor del vinilo se desplaza fuera de la portada... */
+/* En móvil y tablet no hay hover: el vinilo ya está fuera de la portada
+   y gira sin parar. En escritorio solo se anima con hover (ver media query) */
 .disco__vinilo {
     position: absolute;
     top: 1.5%;
     left: 1.5%;
     width: 97%;
     height: 97%;
+    transform: translateX(32%);
     transition: transform 0.7s ease;
 }
 
-/* .animado: clase que añade jQuery al destacado al pasar por el ranking */
-.disco__media:hover .disco__vinilo,
-.disco__media.animado .disco__vinilo {
-    transform: translateX(32%);
-}
-
-/* ...y la imagen del vinilo gira sobre sí misma sin parar mientras dura el hover */
 .disco__vinilo-img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     animation: girar 3s linear infinite;
-    animation-play-state: paused;
-}
-
-.disco__media:hover .disco__vinilo-img,
-.disco__media.animado .disco__vinilo-img {
-    animation-play-state: running;
 }
 
 /* Ficha del disco */
@@ -608,7 +597,15 @@ button {
     font-weight: 600;
 }
 
+/* Disco destacado en móvil y tablet: más grande y centrado.
+   --ancho es el tamaño de la portada; el vinilo sobresale un 30% más
+   por la derecha, así que un margen derecho de ese 30% centra el conjunto */
 .destacado__media {
+    --ancho: 74%;
+    width: var(--ancho);
+    max-width: none;
+    align-self: center;
+    margin-right: calc(var(--ancho) * 0.3);
     transition: opacity 0.25s ease;
 }
 
@@ -959,7 +956,8 @@ button {
     }
 
     .destacado__media {
-        width: 60%;
+        --ancho: min(62%, 480px);
+        width: var(--ancho);
     }
 
     .datos {
@@ -1039,9 +1037,24 @@ button {
         width: 100%;
     }
 
+    /* Escritorio: el vinilo está guardado y solo sale y gira con hover.
+       .animado: clase que añade jQuery al destacado al pasar por el ranking */
+    .disco__vinilo {
+        transform: none;
+    }
+
     .disco__media:hover .disco__vinilo,
     .disco__media.animado .disco__vinilo {
         transform: translateX(52%);
+    }
+
+    .disco__vinilo-img {
+        animation-play-state: paused;
+    }
+
+    .disco__media:hover .disco__vinilo-img,
+    .disco__media.animado .disco__vinilo-img {
+        animation-play-state: running;
     }
 
     .subtitulo {
@@ -1062,6 +1075,9 @@ button {
 
     .destacado__media {
         width: 100%;
+        max-width: 405px;
+        align-self: flex-start;
+        margin-right: 0;
     }
 
     .sobre {
