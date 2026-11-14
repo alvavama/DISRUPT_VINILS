@@ -1,588 +1,1105 @@
 /* =========================================================
-   DISRUPT VINILS · Home
-   Diseño Web Avanzado · Práctica 02
-   Índice:
-   1. Variables y reset
-   2. Utilidades y componentes base (botones, títulos)
-   3. Cabecera y menú
-   4. Recién llegado (discos + fichas)
-   5. Noticias (slider)
-   6. Marquee
-   7. Lo mejor del mes
-   8. Sobre nosotros
-   9. Footer
-   10. Media queries (tablet y móvil)
+   DISRUPT VINILS · HOME · Diseño Web Avanzado · Práctica 02
+   Mobile first: primero móvil, después tablet y escritorio.
    ========================================================= */
 
-/* ---------- 1. Variables y reset ---------- */
+/* ---------- Variables ---------- */
 :root {
-  --claro: #ECECEC;
-  --oscuro: #1B1B1B;
-  --gris: #D3CACA;            /* texto secundario de las fichas */
-  --gris-oscuro: #8C8585;     /* texto secundario sobre claro con más contraste */
-  --borde: 3px;
+    --color-claro: #ECECEC;
+    --color-oscuro: #1B1B1B;
+    --color-suave: #D3CACA;        /* texto secundario de las fichas */
+    --color-suave-oscuro: #8C8585; /* texto secundario con más contraste */
+    --color-error: #FF8A8A;
 
-  --fuente-pixel: "Bitcount Prop Single", "Courier New", monospace;
-  --fuente-texto: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --fuente-pixel: "Bitcount Prop Single", "Courier New", monospace;
+    --fuente-ui: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --titulo: clamp(2rem, 4.2vw, 3.5rem);      /* 55px en escritorio */
-  --titulo-ficha: clamp(1.9rem, 3vw, 2.7rem); /* 43px */
-  --boton: clamp(1.25rem, 2vw, 1.875rem);    /* 30px */
+    --borde: 3px;
+    --espacio: 20px;               /* margen lateral: 20 / 32 / 50 px */
+    --espacio-seccion: 56px;       /* separación vertical: 56 / 70 / 90 px */
+    --gap-slider: 24px;
+    --ancho-max: 1220px;
+    --transicion: 0.3s ease;
 
-  --ancho-max: 1220px;
-  --padding-lateral: 50px;
-  --espacio-seccion: 90px;
-  --gap-slider: 37px;
-
-  --transicion: 0.3s ease;
+    --titulo: 2rem;                /* 55px en escritorio */
+    --titulo-ficha: 1.9rem;        /* 43px en escritorio */
+    --texto-boton: 1.25rem;        /* 30px en escritorio */
 }
 
-*,
-*::before,
-*::after { box-sizing: border-box; }
+/* ---------- Reset básico ---------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
 
+/* overflow-x: hidden evita la barra de scroll horizontal que
+   provocan las animaciones fade-left/fade-right de AOS */
 body {
-  margin: 0;
-  font-family: var(--fuente-texto);
-  color: var(--oscuro);
-  background: var(--claro);
-  -webkit-font-smoothing: antialiased;
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    font-family: var(--fuente-ui);
+    line-height: 1.4;
+    overflow-x: hidden;
 }
 
-img { display: block; max-width: 100%; }
-ul, ol { margin: 0; padding: 0; list-style: none; }
-h1, h2, h3, p, dl, dd { margin: 0; }
-a { color: inherit; text-decoration: none; }
-button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
-
-.sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-/* ---------- 2. Componentes base ---------- */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Texto solo para lectores de pantalla */
+.oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---------- Estructura común ---------- */
 .contenedor {
-  width: 100%;
-  max-width: var(--ancho-max);
-  margin: 0 auto;
-  padding: 0 var(--padding-lateral);
+    width: 100%;
+    max-width: var(--ancho-max);
+    margin: 0 auto;
+    padding: 0 var(--espacio);
 }
 
-.seccion { padding: var(--espacio-seccion) 0; }
-.seccion--clara { background: var(--claro); color: var(--oscuro); }
-.seccion--oscura { background: var(--oscuro); color: var(--claro); }
-.seccion--borde { border-top: var(--borde) solid var(--oscuro); }
+.seccion {
+    padding: var(--espacio-seccion) 0;
+}
+
+.seccion--clara {
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+}
+
+.seccion--oscura {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+}
+
+.seccion--borde {
+    border-top: var(--borde) solid var(--color-oscuro);
+}
 
 .titulo-seccion {
-  font-family: var(--fuente-pixel);
-  font-weight: 400;
-  font-size: var(--titulo);
-  line-height: 1;
-  letter-spacing: 0.02em;
+    font-family: var(--fuente-pixel);
+    font-size: var(--titulo);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
 }
 
 .cabecera-seccion {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
 }
-.cabecera-seccion .titulo-seccion { margin: 0; }
 
-/* Botón con borde (componente "CATÁLOGO" / "SOBRE NOSOTROS" de Figma) */
+.cabecera-seccion .titulo-seccion {
+    margin-bottom: 0;
+}
+
+/* Botón con borde (componentes "CATÁLOGO" y "SOBRE NOSOTROS" de Figma) */
 .boton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 64px;
-  padding: 0 38px;
-  font-family: var(--fuente-pixel);
-  font-size: var(--boton);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  transition: background-color var(--transicion), color var(--transicion), font-weight var(--transicion);
-}
-.boton--borde {
-  border: var(--borde) solid var(--oscuro);
-  background: var(--claro);
-  color: var(--oscuro);
-}
-.boton--borde:hover,
-.boton--borde:focus-visible {
-  background: var(--oscuro);
-  color: var(--claro);
-  font-weight: 700;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 56px;
+    padding: 0 24px;
+    border: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    font-family: var(--fuente-pixel);
+    font-size: var(--texto-boton);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    transition: background-color var(--transicion), color var(--transicion);
 }
 
-/* ---------- 3. Cabecera y menú ---------- */
+/* Hover: se invierte y pasa a negrita, como la variante de Figma */
+.boton:hover,
+.boton:focus-visible {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    font-weight: 700;
+}
+
+/* ---------- Cabecera y menú (móvil) ---------- */
 .cabecera {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--claro);
-}
-.cabecera__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding-top: 28px;
-  padding-bottom: 28px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: transparent;   /* deja ver el contenido al hacer scroll */
 }
 
-.marca { display: flex; align-items: stretch; gap: 10px; }
-.marca__logo { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
-.marca__logo img { position: absolute; inset: 0; transition: opacity var(--transicion), transform 0.6s ease; }
-.marca__logo-hover { opacity: 0; }
-.marca:hover .marca__logo-base { opacity: 0; }
-.marca:hover .marca__logo-hover { opacity: 1; transform: rotate(180deg); }
-.marca__nombre {
-  display: flex;
-  align-items: center;
-  padding: 0 18px;
-  background: var(--oscuro);
-  color: var(--claro);
-  font-family: var(--fuente-pixel);
-  font-weight: 600;
-  font-size: 2rem;
-  white-space: nowrap;
+.cabecera__barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px var(--espacio);
 }
 
-.menu__lista { display: flex; gap: 27px; }
-
-/* Botón hamburguesa: oculto en escritorio */
-.menu-toggle {
-  display: none;
-  width: 64px;
-  height: 64px;
-  border: var(--borde) solid var(--oscuro);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
+.logo {
+    display: flex;
+    gap: 10px;
 }
-.menu-toggle span {
-  display: block;
-  width: 30px;
-  height: var(--borde);
-  background: var(--oscuro);
-  transition: transform var(--transicion), opacity var(--transicion);
-}
-.menu-toggle.abierto span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
-.menu-toggle.abierto span:nth-child(2) { opacity: 0; }
-.menu-toggle.abierto span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
 
-/* ---------- 4. Recién llegado ---------- */
-.discos { display: flex; flex-direction: column; gap: 46px; }
+.logo__icono {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+}
+
+.logo__disco {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Logo (variante hover de Figma): aparecen dos bandas en el disco
+   y giran sin parar sobre su centro, como un disco girando */
+.logo__bandas {
+    opacity: 0;
+    transform-origin: 31.5px 32.5px;   /* centro del disco en el viewBox */
+    transition: opacity var(--transicion);
+    animation: girar 1.4s linear infinite;
+    animation-play-state: paused;
+}
+
+.logo:hover .logo__bandas,
+.logo:focus-visible .logo__bandas {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.logo__nombre {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    font-family: var(--fuente-pixel);
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Botón hamburguesa */
+.menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    border: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);   /* visible sobre secciones oscuras */
+}
+
+.menu-btn span {
+    display: block;
+    width: 20px;
+    height: var(--borde);
+    background-color: var(--color-oscuro);
+    transition: transform var(--transicion), opacity var(--transicion);
+}
+
+/* Clase que se añade con jQuery: las tres barras forman una X */
+.menu-btn.abierto span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-btn.abierto span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.abierto span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* En móvil el menú empieza oculto: jQuery lo despliega */
+.menu {
+    display: none;
+    padding: 0 var(--espacio) 16px;
+}
+
+.menu .boton {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    font-size: 1.1rem;
+}
+
+.menu .boton + .boton {
+    margin-top: 12px;
+}
+
+/* ---------- Recién llegado ---------- */
+.discos {
+    display: flex;
+    flex-direction: column;
+    gap: 46px;
+}
 
 .disco {
-  display: grid;
-  grid-template-columns: 1fr minmax(300px, 369px);
-  gap: 32px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
 }
 
-/* Portada + vinilo que sale al pasar el ratón (como el hover de Figma) */
+/* Portada + vinilo: el vinilo sale de la funda al pasar el ratón */
 .disco__media {
-  position: relative;
-  width: min(100%, 405px);
-  aspect-ratio: 1 / 1;
+    position: relative;
+    width: 72%;
+    max-width: 405px;
+    aspect-ratio: 1 / 1;
 }
-.disco__portada {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.disco__vinilo {
-  position: absolute;
-  top: 1.5%;
-  left: 1.5%;
-  width: 97%;
-  height: 97%;
-  object-fit: contain;
-  transition: transform 0.7s cubic-bezier(.2,.8,.2,1);
-}
-.disco__media:hover .disco__vinilo { transform: translateX(52%) rotate(200deg); }
 
+.disco__portada {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* El contenedor del vinilo se desplaza fuera de la portada... */
+.disco__vinilo {
+    position: absolute;
+    top: 1.5%;
+    left: 1.5%;
+    width: 97%;
+    height: 97%;
+    transition: transform 0.7s ease;
+}
+
+.disco__media:hover .disco__vinilo {
+    transform: translateX(32%);
+}
+
+/* ...y la imagen del vinilo gira sobre sí misma sin parar mientras dura el hover */
+.disco__vinilo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: girar 3s linear infinite;
+    animation-play-state: paused;
+}
+
+.disco__media:hover .disco__vinilo-img {
+    animation-play-state: running;
+}
+
+/* Ficha del disco */
 .ficha {
-  border: var(--borde) solid var(--oscuro);
-  background: var(--claro);
-  padding: 24px 22px;
+    padding: 24px 22px;
+    border: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);
 }
+
 .ficha__titulo {
-  font-family: var(--fuente-pixel);
-  font-weight: 400;
-  font-size: var(--titulo-ficha);
-  line-height: 1;
-  margin-bottom: 18px;
+    margin-bottom: 18px;
+    font-family: var(--fuente-pixel);
+    font-size: var(--titulo-ficha);
+    font-weight: 400;
+    line-height: 1;
 }
+
 .ficha__fila,
 .ficha__generos {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--gris);
-  font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--color-suave);
+    font-size: 1.125rem;
 }
-.ficha__generos { font-weight: 200; margin: 22px 0; flex-wrap: wrap; font-size: 1.125rem; gap: 8px; }
-.ficha__precio { color: var(--gris); font-weight: 700; font-size: 1.25rem; margin-bottom: 24px; }
 
-/* Contenido desplegable (acordeón jQuery) */
-.ficha__extra { display: none; padding-bottom: 20px; }
-.ficha__datos { display: grid; gap: 8px; margin-bottom: 16px; }
-.ficha__datos div { display: flex; justify-content: space-between; border-bottom: 1px solid var(--gris); padding-bottom: 6px; }
-.ficha__datos dt { font-weight: 700; }
-.ficha__link { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
-
-.boton-desplegar {
-  position: relative;
-  width: 100%;
-  min-height: 51px;
-  background: var(--oscuro);
-  color: var(--claro);
-  font-weight: 700;
-  font-size: 1.25rem;
+.ficha__generos {
+    flex-wrap: wrap;
+    margin: 22px 0;
+    font-weight: 200;
 }
-.boton-desplegar__icono {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  margin-top: -12px;
-  transition: transform var(--transicion);
-}
-.boton-desplegar[aria-expanded="true"] .boton-desplegar__icono { transform: rotate(180deg); }
 
-/* ---------- 5. Noticias (slider jQuery) ---------- */
+.ficha__precio {
+    margin-bottom: 24px;
+    color: var(--color-suave);
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+/* ---------- Acordeón (VER MÁS / VER MENOS) ---------- */
+/* Contenido oculto por defecto: jQuery lo despliega */
+.acordeon__contenido {
+    display: none;
+    padding-bottom: 20px;
+}
+
+.ficha__datos {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.ficha__datos div {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--color-suave);
+}
+
+.ficha__datos dt {
+    font-weight: 700;
+}
+
+.ficha__link {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.acordeon__titulo {
+    position: relative;
+    width: 100%;
+    min-height: 51px;
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Flecha a la derecha, creada con CSS (bordes de un cuadrado girado) */
+.acordeon__titulo::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 9px;
+    height: 9px;
+    margin-top: -7px;
+    border-right: 2.5px solid currentColor;
+    border-bottom: 2.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--transicion), margin-top var(--transicion);
+}
+
+/* Clase que se añade con jQuery al abrir: la flecha apunta hacia arriba */
+.acordeon__titulo.abierto::after {
+    margin-top: -2px;
+    transform: rotate(225deg);
+}
+
+/* ---------- Noticias (slider jQuery con scroll horizontal) ---------- */
 .subtitulo {
-  margin: -16px 0 32px;
-  font-weight: 300;
-  font-size: 1.25rem;
-  color: var(--gris);
+    margin: -12px 0 28px;
+    color: var(--color-suave);
+    font-size: 1.125rem;
+    font-weight: 300;
 }
 
-.slider__controles { display: flex; gap: 16px; }
+.slider__controles {
+    display: flex;
+    gap: 16px;
+}
+
 .flecha {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  border: var(--borde) solid var(--claro);
-  color: var(--claro);
-  transition: background-color var(--transicion), color var(--transicion), opacity var(--transicion);
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border: var(--borde) solid var(--color-claro);
+    color: var(--color-claro);
+    transition: background-color var(--transicion), color var(--transicion);
 }
-.flecha:hover:not(:disabled),
-.flecha:focus-visible { background: var(--claro); color: var(--oscuro); }
-.flecha:disabled { opacity: 0.3; cursor: default; }
 
-/* Viewport con scroll horizontal: sangra hasta el borde derecho de la pantalla */
-.slider {
-  margin-right: calc((100% - 100vw) / 2);
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 18px;               /* espacio para la barra de scroll */
-  cursor: grab;
-  scrollbar-width: thin;
-  scrollbar-color: var(--claro) transparent;
-  -webkit-overflow-scrolling: touch;
+.flecha:hover,
+.flecha:focus-visible {
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
 }
-.slider.arrastrando { cursor: grabbing; user-select: none; }
-.slider.arrastrando a { pointer-events: none; }
+
+/* El viewport: scroll horizontal y sangrado hasta el borde derecho de la pantalla */
+.slider {
+    margin-right: calc((100% - 100vw) / 2);
+    padding-bottom: 18px;           /* hueco para la barra de scroll */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-claro) transparent;
+}
+
 .slider__pista {
-  display: flex;
-  gap: var(--gap-slider);
-  width: max-content;
-  padding-right: var(--padding-lateral);
+    display: flex;
+    gap: var(--gap-slider);
+    width: max-content;
+    padding-right: var(--espacio);
 }
 
 .noticia {
-  flex: 0 0 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 78vw;
+    max-width: 300px;
 }
-.noticia__img { -webkit-user-drag: none; }
+
 .noticia__img {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border: var(--borde) solid var(--claro);
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border: var(--borde) solid var(--color-claro);
 }
-.noticia__meta { display: flex; align-items: center; gap: 14px; color: var(--gris); font-size: 1rem; letter-spacing: 0.06em; }
+
+.noticia__meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--color-suave);
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+}
+
 .noticia__fecha {
-  padding: 6px 10px;
-  background: var(--claro);
-  color: var(--oscuro);
-  font-family: var(--fuente-pixel);
-  font-size: 1.375rem;
+    padding: 6px 10px;
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    font-family: var(--fuente-pixel);
+    font-size: 1.375rem;
 }
-.noticia__titulo { font-family: var(--fuente-pixel); font-weight: 400; font-size: 1.875rem; line-height: 1.1; }
-.noticia__texto { color: var(--gris); font-weight: 300; font-size: 1.0625rem; line-height: 1.35; }
-.noticia__link { font-weight: 700; font-size: 1.0625rem; transition: letter-spacing var(--transicion); }
-.noticia__link:hover { letter-spacing: 0.08em; }
 
-.slider__puntos { display: flex; gap: 12px; margin-top: 36px; }
+.noticia__titulo {
+    font-family: var(--fuente-pixel);
+    font-size: 1.875rem;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.noticia__texto {
+    color: var(--color-suave);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.35;
+}
+
+.noticia__link {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    transition: letter-spacing var(--transicion);
+}
+
+.noticia__link:hover {
+    letter-spacing: 0.08em;
+}
+
+/* Puntos del slider (los crea jQuery) */
+.slider__puntos {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
 .slider__punto {
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--claro);
-  transition: width var(--transicion), background-color var(--transicion);
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-claro);
+    transition: width var(--transicion), background-color var(--transicion);
 }
-.slider__punto.activo { width: 40px; background: var(--claro); }
 
-/* ---------- 6. Marquee ---------- */
+/* Clase que añade jQuery al punto de la noticia actual */
+.slider__punto.activo {
+    width: 40px;
+    background-color: var(--color-claro);
+}
+
+/* ---------- Marquee ---------- */
 .marquee {
-  overflow: hidden;
-  border-top: var(--borde) solid var(--oscuro);
-  border-bottom: var(--borde) solid var(--oscuro);
-  background: var(--claro);
-  padding: 24px 0;
-}
-.marquee__pista {
-  display: flex;
-  gap: 40px;
-  width: max-content;
-  font-family: var(--fuente-pixel);
-  font-size: clamp(1.6rem, 3vw, 2.5rem);
-  white-space: nowrap;
-  animation: marquee 28s linear infinite;
-}
-.marquee:hover .marquee__pista { animation-play-state: paused; }
-@keyframes marquee {
-  to { transform: translateX(calc(-50% - 20px)); }
+    overflow: hidden;
+    padding: 20px 0;
+    border-top: var(--borde) solid var(--color-oscuro);
+    border-bottom: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);
 }
 
-/* ---------- 7. Lo mejor del mes ---------- */
-.mes { font-weight: 300; font-size: 1.25rem; letter-spacing: 0.08em; }
+.marquee__pista {
+    display: flex;
+    gap: 40px;
+    width: max-content;
+    font-family: var(--fuente-pixel);
+    font-size: 1.6rem;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+}
+
+.marquee:hover .marquee__pista {
+    animation-play-state: paused;
+}
+
+/* El texto está duplicado: al mover la mitad vuelve a empezar sin saltos */
+@keyframes marquee {
+    to {
+        transform: translateX(calc(-50% - 20px));
+    }
+}
+
+/* ---------- Lo mejor del mes ---------- */
+.mes {
+    font-size: 1.125rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+}
 
 .mejor {
-  display: grid;
-  grid-template-columns: 1fr minmax(320px, 400px);
-  gap: 40px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
 }
 
-.destacado { display: flex; flex-direction: column; gap: 18px; }
+.destacado {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
 .destacado__badge {
-  align-self: flex-start;
-  padding: 8px 14px;
-  background: var(--oscuro);
-  color: var(--claro);
-  font-family: var(--fuente-pixel);
-  font-weight: 600;
-  font-size: 1.5rem;
+    align-self: flex-start;
+    padding: 8px 14px;
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    font-family: var(--fuente-pixel);
+    font-size: 1.5rem;
+    font-weight: 600;
 }
-.destacado__media.cargando { opacity: 0; }
-.destacado__media { transition: opacity 0.25s ease; }
-.destacado__sin-portada {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: none;
-  place-items: center;
-  background: var(--oscuro);
-  color: var(--claro);
-  font-family: var(--fuente-pixel);
-  font-size: clamp(3rem, 8vw, 6rem);
-}
-.destacado__media.sin-imagen .destacado__sin-portada { display: grid; }
-.destacado__titulo { font-family: var(--fuente-pixel); font-weight: 400; font-size: 1.875rem; }
-.destacado__texto { max-width: 400px; font-weight: 300; font-size: 1.125rem; line-height: 1.4; }
 
-.ranking-bloque { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
-.ranking { width: 100%; }
-.ranking li + li { margin-top: calc(var(--borde) * -1); } /* bordes que no se duplican */
-.ranking__fila {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 18px;
-  width: 100%;
-  padding: 18px 20px;
-  border: var(--borde) solid var(--oscuro);
-  background: var(--claro);
-  color: var(--oscuro);
-  text-align: left;
-  transition: background-color var(--transicion), color var(--transicion);
+.destacado__media {
+    transition: opacity 0.25s ease;
 }
-.ranking__num { font-family: var(--fuente-pixel); font-size: 2.7rem; line-height: 1; }
-.ranking__info { display: flex; flex-direction: column; gap: 6px; }
-.ranking__disco { font-family: var(--fuente-pixel); font-size: 1.625rem; line-height: 1; }
-.ranking__artista { color: var(--gris-oscuro); font-size: 0.9375rem; }
-.ranking__precio { font-weight: 700; font-size: 1.125rem; }
+
+/* Clase que añade jQuery mientras cambia el disco */
+.destacado__media.cambiando {
+    opacity: 0;
+}
+
+/* Portada tipográfica para los discos sin imagen */
+.destacado__sin-portada {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: none;
+    place-items: center;
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    font-family: var(--fuente-pixel);
+    font-size: 3rem;
+}
+
+.destacado__media.sin-imagen .destacado__sin-portada {
+    display: grid;
+}
+
+.destacado__titulo {
+    font-family: var(--fuente-pixel);
+    font-size: 1.875rem;
+    font-weight: 400;
+}
+
+.destacado__texto {
+    max-width: 400px;
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.ranking-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.ranking {
+    width: 100%;
+}
+
+/* Margen negativo para que los bordes de 3px no se dupliquen */
+.ranking li + li {
+    margin-top: calc(var(--borde) * -1);
+}
+
+.ranking__fila {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    text-align: left;
+    transition: background-color var(--transicion), color var(--transicion);
+}
+
+.ranking__num {
+    font-family: var(--fuente-pixel);
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.ranking__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ranking__disco {
+    font-family: var(--fuente-pixel);
+    font-size: 1.625rem;
+    line-height: 1;
+}
+
+.ranking__artista {
+    color: var(--color-suave-oscuro);
+    font-size: 0.9375rem;
+}
+
+.ranking__precio {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+/* Hover y clase "activa" (la añade jQuery): se invierten los colores */
 .ranking__fila:hover,
 .ranking__fila:focus-visible,
-.ranking__fila.activa { background: var(--oscuro); color: var(--claro); }
-.ranking__fila:hover .ranking__artista,
-.ranking__fila.activa .ranking__artista { color: var(--gris); }
-
-/* ---------- 8. Sobre nosotros ---------- */
-#sobre-nosotros .titulo-seccion { margin-bottom: 36px; }
-
-.statement {
-  min-height: 3.6em;
-  font-family: var(--fuente-pixel);
-  font-size: var(--titulo-ficha);
-  line-height: 1.2;
-  margin-bottom: 40px;
+.ranking__fila.activa {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
 }
-.typed-cursor { font-family: var(--fuente-pixel); }
+
+.ranking__fila:hover .ranking__artista,
+.ranking__fila.activa .ranking__artista {
+    color: var(--color-suave);
+}
+
+/* ---------- Sobre nosotros ---------- */
+.statement {
+    min-height: 5em;
+    margin-bottom: 36px;
+    font-family: var(--fuente-pixel);
+    font-size: var(--titulo-ficha);
+    line-height: 1.2;
+}
+
+/* Cursor que añade Typed.js */
+.typed-cursor {
+    font-family: var(--fuente-pixel);
+}
 
 .datos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
 }
+
 .dato {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px;
-  border: var(--borde) solid var(--oscuro);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+    border: var(--borde) solid var(--color-oscuro);
 }
-.dato strong { font-family: var(--fuente-pixel); font-weight: 400; font-size: var(--titulo); line-height: 1; }
-.dato span { font-size: 1rem; letter-spacing: 0.06em; }
+
+.dato strong {
+    font-family: var(--fuente-pixel);
+    font-size: var(--titulo);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.dato span {
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+}
 
 .sobre {
-  display: grid;
-  grid-template-columns: minmax(0, 540px) minmax(0, 300px);
-  justify-content: space-between;
-  gap: 60px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
 }
-.sobre__texto { font-size: 1.1875rem; line-height: 1.45; }
-.sobre__info { font-style: normal; display: flex; flex-direction: column; align-items: flex-start; }
-.sobre__info h3 { font-family: var(--fuente-pixel); font-weight: 400; font-size: 1.625rem; margin-bottom: 6px; }
+
+.sobre__texto {
+    font-size: 1.1875rem;
+    line-height: 1.45;
+}
+
+.sobre__info h3 {
+    margin-bottom: 6px;
+    font-family: var(--fuente-pixel);
+    font-size: 1.625rem;
+    font-weight: 400;
+}
+
 .sobre__info p,
-.sobre__info address { font-style: normal; font-size: 1.125rem; margin-bottom: 18px; }
+.sobre__info address {
+    margin-bottom: 18px;
+    font-size: 1.125rem;
+    font-style: normal;
+}
 
-/* ---------- 9. Footer ---------- */
-.pie { background: var(--oscuro); color: var(--claro); padding: 60px 0 30px; }
+/* ---------- Pie ---------- */
+.pie {
+    padding: 60px 0 30px;
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+}
+
 .pie__top {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
-  gap: 40px;
-  padding-bottom: 50px;
-  border-bottom: 2px solid rgba(236, 236, 236, 0.25);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 50px;
+    border-bottom: 2px solid rgba(236, 236, 236, 0.25);
 }
-.pie__marca p { margin-top: 16px; color: var(--gris); font-weight: 300; }
-.marca--invertida .marca__nombre { background: var(--claro); color: var(--oscuro); font-size: 1.6rem; }
-.pie__col h2 { font-family: var(--fuente-pixel); font-weight: 400; font-size: 1.625rem; margin-bottom: 14px; }
-.pie__col li + li { margin-top: 12px; }
-.pie__col a { font-size: 1.0625rem; transition: opacity var(--transicion); }
-.pie__col a:hover { opacity: 0.6; }
 
-.newsletter p { color: var(--gris); font-weight: 300; margin-bottom: 14px; }
-.newsletter__form { display: flex; flex-direction: column; gap: 14px; }
+.pie__marca p {
+    margin-top: 16px;
+    color: var(--color-suave);
+    font-weight: 300;
+}
+
+.logo--invertido .logo__nombre {
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+}
+
+.pie__col h2 {
+    margin-bottom: 14px;
+    font-family: var(--fuente-pixel);
+    font-size: 1.625rem;
+    font-weight: 400;
+}
+
+.pie__col li + li {
+    margin-top: 12px;
+}
+
+.pie__col a {
+    font-size: 1.0625rem;
+    transition: opacity var(--transicion);
+}
+
+.pie__col a:hover {
+    opacity: 0.6;
+}
+
+.newsletter p {
+    margin-bottom: 14px;
+    color: var(--color-suave);
+    font-weight: 300;
+}
+
+.newsletter__form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 400px;
+}
+
 .newsletter__form input {
-  height: 56px;
-  padding: 0 16px;
-  border: var(--borde) solid var(--claro);
-  background: transparent;
-  color: var(--claro);
-  font: inherit;
-  font-size: 1rem;
+    height: 56px;
+    padding: 0 16px;
+    border: var(--borde) solid var(--color-claro);
+    background: transparent;
+    color: var(--color-claro);
+    font: inherit;
 }
-.newsletter__form input::placeholder { color: var(--gris); }
-.newsletter__form input.error { border-color: #FF5A5A; }
+
+.newsletter__form input::placeholder {
+    color: var(--color-suave);
+}
+
+/* Clase que añade jQuery si el email no es válido */
+.newsletter__form input.error {
+    border-color: var(--color-error);
+}
+
 .newsletter__form button {
-  height: 56px;
-  background: var(--claro);
-  color: var(--oscuro);
-  font-family: var(--fuente-pixel);
-  font-weight: 600;
-  font-size: 1.5rem;
-  transition: letter-spacing var(--transicion);
+    height: 56px;
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    font-family: var(--fuente-pixel);
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: letter-spacing var(--transicion);
 }
-.newsletter__form button:hover { letter-spacing: 0.08em; }
-.newsletter__msg { min-height: 1.2em; font-size: 0.9375rem; margin: 0 !important; }
-.newsletter__msg.error { color: #FF8A8A; }
-.newsletter__msg.ok { color: var(--claro); }
+
+.newsletter__form button:hover {
+    letter-spacing: 0.08em;
+}
+
+.newsletter p.newsletter__mensaje {
+    min-height: 1.2em;
+    margin: 0;
+    font-size: 0.9375rem;
+}
+
+.newsletter p.newsletter__mensaje.error {
+    color: var(--color-error);
+}
+
+.newsletter p.newsletter__mensaje.ok {
+    color: var(--color-claro);
+}
 
 .pie__bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding-top: 30px;
-  font-size: 0.875rem;
-  color: var(--gris);
-}
-.pie__redes { display: flex; gap: 28px; }
-.pie__redes a { color: var(--claro); font-weight: 700; letter-spacing: 0.06em; }
-
-/* ---------- 10. Media queries ---------- */
-
-/* TABLET: 768px – 1023px */
-@media (max-width: 1023px) {
-  :root {
-    --padding-lateral: 32px;
-    --espacio-seccion: 70px;
-    --gap-slider: 20px;
-  }
-
-  /* Menú hamburguesa (jQuery) */
-  .menu-toggle { display: flex; }
-  .cabecera__inner { flex-wrap: wrap; }
-  .menu {
-    display: none;            /* jQuery lo abre con slideToggle */
-    flex-basis: 100%;
-  }
-  .menu__lista { flex-direction: column; gap: 12px; }
-  .menu__lista .boton { width: 100%; }
-
-  .disco { grid-template-columns: 1fr 1fr; gap: 24px; }
-  .disco__media { width: 75%; }
-
-
-  .mejor { grid-template-columns: 1fr; }
-  .destacado__media { width: min(65%, 405px); }
-
-  .pie__top { grid-template-columns: 1fr 1fr; }
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 30px;
+    color: var(--color-suave);
+    font-size: 0.875rem;
 }
 
-/* MÓVIL: hasta 767px */
-@media (max-width: 767px) {
-  :root {
-    --padding-lateral: 20px;
-    --espacio-seccion: 56px;
-  }
-
-  .cabecera__inner { padding-top: 16px; padding-bottom: 16px; }
-  .marca__logo, .menu-toggle { width: 52px; height: 52px; }
-  .marca__nombre { font-size: 1.35rem; padding: 0 12px; }
-  .menu-toggle span { width: 24px; }
-
-  .boton { min-height: 56px; padding: 0 24px; }
-
-  .disco { grid-template-columns: 1fr; }
-  .disco__media { width: 72%; }
-  .disco__media:hover .disco__vinilo { transform: translateX(32%) rotate(200deg); }
-
-  .slider__controles { order: 2; }
-  .flecha { width: 52px; height: 52px; }
-  .noticia { flex-basis: 78vw; }
-
-  .destacado__media { width: 72%; }
-  .ranking__fila { padding: 14px 16px; gap: 12px; }
-  .ranking__num { font-size: 2rem; }
-
-  .datos { grid-template-columns: 1fr; }
-  .sobre { grid-template-columns: 1fr; gap: 32px; }
-
-  .pie__top { grid-template-columns: 1fr; }
-  .pie__bottom { flex-direction: column; align-items: flex-start; }
+.pie__redes {
+    display: flex;
+    gap: 28px;
 }
 
-/* Accesibilidad: menos movimiento */
+.pie__redes a {
+    color: var(--color-claro);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+/* ---------- Tablet ---------- */
+@media (min-width: 768px) {
+    :root {
+        --espacio: 32px;
+        --espacio-seccion: 70px;
+        --gap-slider: 30px;
+        --titulo: 2.75rem;
+        --titulo-ficha: 2.3rem;
+        --texto-boton: 1.5rem;
+    }
+
+    .cabecera__barra {
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+    .logo__icono {
+        width: 48px;
+        height: 48px;
+    }
+
+    .logo__nombre {
+        padding: 0 14px;
+        font-size: 1.4rem;
+    }
+
+    .menu-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .menu-btn span {
+        width: 24px;
+    }
+
+    .disco {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+    .disco__media {
+        width: 80%;
+    }
+
+    .flecha {
+        width: 64px;
+        height: 64px;
+    }
+
+    .noticia {
+        width: 300px;
+    }
+
+    .marquee__pista {
+        font-size: 2.2rem;
+    }
+
+    .ranking__fila {
+        gap: 18px;
+        padding: 18px 20px;
+    }
+
+    .ranking__num {
+        font-size: 2.7rem;
+    }
+
+    .destacado__media {
+        width: 60%;
+    }
+
+    .datos {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .sobre {
+        grid-template-columns: 1.3fr 1fr;
+        gap: 48px;
+    }
+
+    .pie__top {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pie__bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+/* ---------- Escritorio ---------- */
+@media (min-width: 1024px) {
+    :root {
+        --espacio: 50px;
+        --espacio-seccion: 90px;
+        --gap-slider: 37px;
+        --titulo: 3.5rem;
+        --titulo-ficha: 2.7rem;
+        --texto-boton: 1.875rem;
+    }
+
+    /* Cabecera en una fila: logo a la izquierda y menú a la derecha */
+    .cabecera {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: var(--ancho-max);
+        margin: 0 auto;
+        padding: 20px var(--espacio);
+    }
+
+    .cabecera__barra {
+        padding: 0;
+    }
+
+    .menu-btn {
+        display: none;
+    }
+
+    /* !important porque jQuery deja un display en línea en el HTML
+       al plegar el menú en móvil; así el menú siempre se ve en escritorio */
+    .menu {
+        display: flex !important;
+        gap: 16px;
+        padding: 0;
+    }
+
+    .menu .boton {
+        width: auto;
+        min-height: 48px;
+        padding: 0 24px;
+        font-size: 1.25rem;
+    }
+
+    .menu .boton + .boton {
+        margin-top: 0;
+    }
+
+    .disco {
+        grid-template-columns: 1fr 369px;
+        gap: 32px;
+    }
+
+    .disco__media {
+        width: 100%;
+    }
+
+    .disco__media:hover .disco__vinilo {
+        transform: translateX(52%);
+    }
+
+    .subtitulo {
+        font-size: 1.25rem;
+    }
+
+    .marquee {
+        padding: 24px 0;
+    }
+
+    .marquee__pista {
+        font-size: 2.5rem;
+    }
+
+    .mejor {
+        grid-template-columns: 1fr 400px;
+    }
+
+    .destacado__media {
+        width: 100%;
+    }
+
+    .destacado__sin-portada {
+        font-size: 6rem;
+    }
+
+    .sobre {
+        grid-template-columns: minmax(0, 540px) minmax(0, 300px);
+        justify-content: space-between;
+        gap: 60px;
+    }
+
+    .pie__top {
+        grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
+    }
+}
+
+/* Accesibilidad: si el usuario pide menos movimiento, quitamos animaciones */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  html { scroll-behavior: auto; }
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
 }

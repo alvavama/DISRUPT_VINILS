@@ -17,21 +17,21 @@ Web interactiva de una tienda de vinilos independiente en Madrid.
 
 - HTML5 semántico (`header`, `nav`, `main`, `section`, `article`, `footer`, `time`, `address`…)
 - CSS3 con variables, Flexbox y Grid. Sin frameworks.
-- Responsive con media queries: **escritorio** (≥1024px), **tablet** (768–1023px) y **móvil** (≤767px).
+- Responsive *mobile first* con media queries: **móvil** (base), **tablet** (≥768px) y **escritorio** (≥1024px).
 - Tipografías: *Bitcount Prop Single* (Google Fonts) y *Helvetica Neue*.
 
 ## Interacciones y librerías
 
 | Interacción | Dónde | Librería |
 | --- | --- | --- |
-| Slider de noticias con scroll horizontal (trackpad, táctil, arrastre con ratón, flechas, puntos y teclado) | Noticias y novedades | jQuery (sin librerías de sliders) |
-| Menú de navegación responsive (hamburguesa + `slideToggle`) | Cabecera (tablet y móvil) | jQuery |
+| Slider de noticias con scroll horizontal (flechas, puntos, avance automático y teclado) | Noticias y novedades | jQuery (sin librerías de sliders) |
+| Menú de navegación responsive (hamburguesa + `slideToggle`) | Cabecera (móvil y tablet) | jQuery |
 | Acordeón "VER MÁS / VER MENOS" con ficha del disco | Recién llegado | jQuery |
 | Ranking que cambia el disco destacado | Lo mejor del mes | jQuery |
 | Validación del formulario de newsletter | Footer | jQuery |
 | Animaciones al hacer scroll (títulos, discos, datos) | Varias secciones | AOS |
 | Texto que se escribe solo al llegar a la sección | Sobre nosotros | Typed.js |
-| Vinilo que sale de la funda al pasar el ratón · logo que gira · marquee | Varias | CSS |
+| Vinilo que sale de la portada y gira · bandas del logo que giran · marquee | Varias | CSS |
 
 ## Estructura
 
@@ -44,8 +44,8 @@ Web interactiva de una tienda de vinilos independiente en Madrid.
 
 ## Flujo de trabajo con Git
 
-- `main`: rama estable.
-- `dev-alvaro`: rama personal de desarrollo; los cambios se fusionan en `main`.
+- `main`: rama estable con la versión publicada.
+- `HOME`: rama de desarrollo de la página Home; sus cambios se fusionan en `main`.
 
 ## Uso de IA
 

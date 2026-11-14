@@ -1,238 +1,290 @@
 /* =========================================================
-   DISRUPT VINILS · Interacciones de la Home
-   - jQuery: menú responsive, acordeón "VER MÁS", slider de
-     noticias, ranking "Lo mejor del mes" y validación newsletter
-   - AOS: animaciones al hacer scroll
-   - Typed.js: texto que se escribe en "Sobre nosotros"
+   DISRUPT VINILS · HOME · Interacciones
+   1. Menú responsive (jQuery)
+   2. Acordeón "VER MÁS" de las fichas (jQuery)
+   3. Slider de noticias con scroll horizontal (jQuery)
+   4. Ranking de "Lo mejor del mes" (jQuery)
+   5. Validación del newsletter (jQuery)
+   6. AOS (Animate On Scroll)
+   7. Typed.js
    ========================================================= */
 
-$(function () {
+$(document).ready(function () {
 
-  /* ---------- 1. MENÚ RESPONSIVE (jQuery) ---------- */
-  var $toggle = $('.menu-toggle');
-  var $menu = $('.menu');
+    /* ---------- 1. MENÚ RESPONSIVE ----------
+       En móvil y tablet el menú está oculto (display: none en el CSS).
+       Al pulsar el botón, slideToggle() lo despliega o lo pliega
+       y toggleClass("abierto") convierte las tres barras en una X. */
+    $(".menu-btn").on("click", function () {
+        $(".menu").slideToggle(300);
+        $(this).toggleClass("abierto");
 
-  $toggle.on('click', function () {
-    var abierto = $(this).toggleClass('abierto').hasClass('abierto');
-    $(this).attr({
-      'aria-expanded': abierto,
-      'aria-label': abierto ? 'Cerrar menú' : 'Abrir menú'
+        // Actualizamos los atributos de accesibilidad
+        var abierto = $(this).hasClass("abierto");
+        $(this).attr("aria-expanded", abierto);
+        $(this).attr("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
     });
-    $menu.stop(true, true).slideToggle(300);
-  });
 
-  // Al pulsar un enlace en móvil/tablet se cierra el menú
-  $menu.find('a').on('click', function () {
-    if ($toggle.is(':visible') && $toggle.hasClass('abierto')) {
-      $toggle.trigger('click');
+    // Al pulsar un enlace del menú en móvil, el menú se cierra
+    $(".menu a").on("click", function () {
+        if ($(".menu-btn").hasClass("abierto")) {
+            $(".menu-btn").trigger("click");
+        }
+    });
+
+
+    /* ---------- 2. ACORDEÓN "VER MÁS" ----------
+       Cada ficha tiene un botón .acordeon__titulo y, justo antes,
+       su .acordeon__contenido. Al pulsar el botón:
+       - se pliegan las demás fichas que estuvieran abiertas
+       - se despliega o pliega la ficha pulsada con slideToggle() */
+    $(".acordeon__titulo").on("click", function () {
+        var boton = $(this);
+        var contenido = boton.prev(".acordeon__contenido");
+
+        // Cerramos las otras fichas abiertas
+        $(".acordeon__titulo").not(boton).removeClass("abierto")
+            .attr("aria-expanded", false).text("VER MÁS");
+        $(".acordeon__contenido").not(contenido).slideUp(300);
+
+        // Abrimos o cerramos esta ficha
+        contenido.slideToggle(300);
+        boton.toggleClass("abierto");
+
+        if (boton.hasClass("abierto")) {
+            boton.text("VER MENOS").attr("aria-expanded", true);
+        } else {
+            boton.text("VER MÁS").attr("aria-expanded", false);
+        }
+    });
+
+
+    /* ---------- 3. SLIDER DE NOTICIAS ----------
+       El viewport (.slider) tiene overflow-x: auto, así que también se
+       puede recorrer con el trackpad, la rueda + Shift o el dedo.
+       jQuery lo controla con la misma lógica de un slideshow:
+       una posición actual, un total y una función mostrar(n),
+       pero en vez de fadeIn/fadeOut movemos el scroll con animate(). */
+    var viewport = $(".slider");
+    var slides = $(".noticia");
+    var actual = 0;
+    var total = slides.length;
+    var autoplay;
+
+    // Creamos un punto por cada noticia
+    for (var i = 0; i < total; i++) {
+        $("#puntos").append('<button type="button" class="slider__punto" aria-label="Ir a la noticia ' + (i + 1) + '"></button>');
     }
-  });
+    var puntos = $(".slider__punto");
 
-  // Si se agranda la ventana a escritorio, quitamos el estilo inline del slideToggle
-  $(window).on('resize', function () {
-    if (!$toggle.is(':visible')) {
-      $menu.removeAttr('style');
-      $toggle.removeClass('abierto').attr('aria-expanded', false);
+    // Distancia entre el inicio de una noticia y la siguiente (ancho + gap)
+    function paso() {
+        return slides.eq(1).offset().left - slides.eq(0).offset().left;
     }
-  });
 
-
-  /* ---------- 2. ACORDEÓN "VER MÁS" en las fichas (jQuery) ---------- */
-  $('.boton-desplegar').on('click', function () {
-    var $boton = $(this);
-    var $extra = $('#' + $boton.attr('aria-controls'));
-    var abierto = $boton.attr('aria-expanded') === 'true';
-
-    $extra.stop(true, true).slideToggle(350);
-    $boton.attr('aria-expanded', !abierto);
-    $boton.find('.boton-desplegar__texto').text(abierto ? 'VER MÁS' : 'VER MENOS');
-  });
-
-
-  /* ---------- 3. SLIDER DE NOTICIAS con scroll horizontal (jQuery, sin librerías) ----------
-     El viewport (.slider) tiene overflow-x: auto, así que se puede recorrer con
-     el trackpad, la rueda + Shift o el dedo. jQuery añade: flechas, puntos,
-     arrastre con el ratón y teclado, todos moviendo el scrollLeft del viewport. */
-  var $slider = $('.slider');
-  var $pista = $('.slider__pista');
-  var $tarjetas = $pista.children('.noticia');
-  var $prev = $('.flecha--prev');
-  var $next = $('.flecha--next');
-  var $puntos = $('.slider__puntos');
-
-  // Distancia entre el inicio de una tarjeta y la siguiente
-  function paso() {
-    var gap = parseFloat($pista.css('column-gap')) || 0;
-    return $tarjetas.first().outerWidth() + gap;
-  }
-
-  function scrollMaximo() {
-    return $slider[0].scrollWidth - $slider[0].clientWidth;
-  }
-
-  // Tarjeta que está al principio del viewport
-  function indiceActual() {
-    if ($slider.scrollLeft() >= scrollMaximo() - 2) { return $tarjetas.length - 1; }
-    return Math.round($slider.scrollLeft() / paso());
-  }
-
-  function irA(indice) {
-    indice = Math.min(Math.max(indice, 0), $tarjetas.length - 1);
-    var destino = Math.min(indice * paso(), scrollMaximo());
-    $slider.stop().animate({ scrollLeft: destino }, 450);
-  }
-
-  // Un punto por tarjeta
-  $tarjetas.each(function (i) {
-    $('<button>', {
-      'class': 'slider__punto',
-      type: 'button',
-      'aria-label': 'Ir a la noticia ' + (i + 1)
-    }).data('indice', i).appendTo($puntos);
-  });
-
-  // Actualiza puntos y flechas según la posición del scroll
-  function actualizarSlider() {
-    var actual = indiceActual();
-    $puntos.children().removeClass('activo').removeAttr('aria-current')
-      .eq(actual).addClass('activo').attr('aria-current', 'true');
-    $prev.prop('disabled', $slider.scrollLeft() <= 2);
-    $next.prop('disabled', $slider.scrollLeft() >= scrollMaximo() - 2);
-  }
-
-  $prev.on('click', function () { irA(indiceActual() - 1); });
-  $next.on('click', function () {
-    // Si estamos entre dos tarjetas, avanzamos a la siguiente completa
-    irA(Math.floor($slider.scrollLeft() / paso() + 0.05) + 1);
-  });
-  $puntos.on('click', '.slider__punto', function () { irA($(this).data('indice')); });
-  $slider.on('scroll', actualizarSlider);
-
-  // Teclado: flechas izquierda/derecha cuando el foco está en la sección
-  $('#noticias').on('keydown', function (e) {
-    if (e.key === 'ArrowLeft') { e.preventDefault(); $prev.trigger('click'); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); $next.trigger('click'); }
-  });
-
-  // Arrastrar con el ratón para hacer scroll
-  var arrastre = { activo: false, x: 0, scroll: 0, movido: false };
-
-  $slider.on('mousedown', function (e) {
-    if (e.which !== 1) { return; }
-    e.preventDefault(); // evita seleccionar texto o arrastrar la imagen
-    arrastre = { activo: true, x: e.pageX, scroll: $slider.scrollLeft(), movido: false };
-    $slider.stop();
-  });
-
-  $(document).on('mousemove', function (e) {
-    if (!arrastre.activo) { return; }
-    var distancia = e.pageX - arrastre.x;
-    if (Math.abs(distancia) > 5) {
-      arrastre.movido = true;
-      $slider.addClass('arrastrando');
+    // Lo máximo que se puede desplazar el viewport
+    function scrollMaximo() {
+        return viewport[0].scrollWidth - viewport.outerWidth();
     }
-    $slider.scrollLeft(arrastre.scroll - distancia);
-  });
 
-  $(document).on('mouseup', function () {
-    if (!arrastre.activo) { return; }
-    arrastre.activo = false;
-    // Al soltar, se ajusta a la tarjeta más cercana
-    if (arrastre.movido) { irA(Math.round($slider.scrollLeft() / paso())); }
-    setTimeout(function () { $slider.removeClass('arrastrando'); }, 0);
-  });
-
-  $(window).on('resize', actualizarSlider);
-  actualizarSlider();
-
-
-  /* ---------- 4. LO MEJOR DEL MES: ranking que cambia el destacado (jQuery) ---------- */
-  var $media = $('.destacado__media');
-
-  $('.ranking__fila').on('click mouseenter', function () {
-    var $fila = $(this);
-    if ($fila.hasClass('activa')) { return; }
-
-    $('.ranking__fila').removeClass('activa');
-    $fila.addClass('activa');
-
-    var datos = $fila.data(); // data-num, data-titulo, data-portada, data-vinilo, data-desc
-
-    $media.addClass('cargando');
-    setTimeout(function () {
-      if (datos.portada) {
-        $media.removeClass('sin-imagen');
-        $('.js-dest-portada').attr({ src: datos.portada, alt: 'Portada de ' + datos.titulo });
-        $('.js-dest-vinilo').attr('src', datos.vinilo);
-      } else {
-        // Discos sin imagen: portada tipográfica
-        $media.addClass('sin-imagen');
-        $('.js-dest-texto').text($fila.find('.ranking__disco').text());
-      }
-      $('.js-dest-num').text(datos.num);
-      $('.js-dest-titulo').text(datos.titulo);
-      $('.js-dest-desc').text(datos.desc);
-      $media.removeClass('cargando');
-    }, 250);
-  });
-
-
-  /* ---------- 5. VALIDACIÓN DEL NEWSLETTER (jQuery) ---------- */
-  $('.newsletter__form').on('submit', function (e) {
-    e.preventDefault();
-    var $input = $(this).find('input[type="email"]');
-    var $msg = $(this).find('.newsletter__msg');
-    var email = $.trim($input.val());
-    var patron = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-    if (email === '') {
-      $input.addClass('error');
-      $msg.removeClass('ok').addClass('error').text('Escribe tu email para suscribirte.');
-    } else if (!patron.test(email)) {
-      $input.addClass('error');
-      $msg.removeClass('ok').addClass('error').text('Ese email no parece válido.');
-    } else {
-      $input.removeClass('error').val('');
-      $msg.removeClass('error').addClass('ok').hide().text('¡Hecho! Te escribiremos con las novedades.').fadeIn(300);
+    // Marca el punto de la noticia actual
+    function actualizarPuntos() {
+        puntos.removeClass("activo");
+        puntos.eq(actual).addClass("activo");
     }
-  });
 
-  $('.newsletter__form input').on('input', function () {
-    $(this).removeClass('error');
-  });
-
-
-  /* ---------- 6. AOS (Animate On Scroll) ---------- */
-  AOS.init({
-    duration: 700,
-    easing: 'ease-out-cubic',
-    once: true,
-    offset: 80
-  });
-
-
-  /* ---------- 7. TYPED.JS: statement de "Sobre nosotros" ---------- */
-  // Empieza a escribir solo cuando la sección entra en pantalla
-  var $typed = $('.js-typed');
-  var typedIniciado = false;
-
-  function comprobarTyped() {
-    if (typedIniciado) { return; }
-    var arribaSeccion = $typed.offset().top;
-    var abajoVentana = $(window).scrollTop() + $(window).height();
-
-    if (abajoVentana > arribaSeccion + 50) {
-      typedIniciado = true;
-      new Typed('.js-typed', {
-        strings: [$typed.data('texto')],
-        typeSpeed: 35,
-        showCursor: true,
-        cursorChar: '_'
-      });
-      $(window).off('scroll', comprobarTyped);
+    // Lleva el slider a la noticia n
+    function mostrar(n) {
+        actual = n;
+        var destino = Math.min(actual * paso(), scrollMaximo());
+        viewport.stop().animate({ scrollLeft: destino }, 500);
+        actualizarPuntos();
     }
-  }
 
-  $(window).on('scroll', comprobarTyped);
-  comprobarTyped();
+    function siguiente() {
+        // Si ya se ve el final del slider, volvemos a la primera noticia
+        if (viewport.scrollLeft() >= scrollMaximo() - 5) {
+            mostrar(0);
+        } else {
+            mostrar(actual + 1);
+        }
+    }
+
+    function anterior() {
+        if (actual === 0) {
+            mostrar(total - 1);
+        } else {
+            mostrar(actual - 1);
+        }
+    }
+
+    // Avance automático cada 4 segundos
+    function iniciarAutoplay() {
+        clearInterval(autoplay);
+        autoplay = setInterval(siguiente, 4000);
+    }
+
+    // Si se pulsa un control, paramos el avance y lo reanudamos 5 segundos después
+    function pausarAutoplay() {
+        clearInterval(autoplay);
+        clearTimeout(viewport.data("reanudar"));
+        viewport.data("reanudar", setTimeout(iniciarAutoplay, 5000));
+    }
+
+    $("#siguiente").on("click", function () {
+        siguiente();
+        pausarAutoplay();
+    });
+
+    $("#anterior").on("click", function () {
+        anterior();
+        pausarAutoplay();
+    });
+
+    puntos.on("click", function () {
+        mostrar($(this).index());
+        pausarAutoplay();
+    });
+
+    // Mientras el ratón está encima del slider, no avanza solo
+    viewport.on("mouseenter", function () {
+        clearInterval(autoplay);
+    });
+
+    viewport.on("mouseleave", function () {
+        iniciarAutoplay();
+    });
+
+    // Si el usuario hace scroll a mano, actualizamos la noticia actual
+    viewport.on("scroll", function () {
+        if (viewport.is(":animated")) {
+            return;
+        }
+        if (viewport.scrollLeft() >= scrollMaximo() - 5) {
+            actual = total - 1;
+        } else {
+            actual = Math.round(viewport.scrollLeft() / paso());
+        }
+        actualizarPuntos();
+    });
+
+    // Flechas del teclado cuando el foco está en el slider
+    viewport.on("keydown", function (e) {
+        if (e.key === "ArrowRight") {
+            e.preventDefault();
+            $("#siguiente").trigger("click");
+        }
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            $("#anterior").trigger("click");
+        }
+    });
+
+    actualizarPuntos();
+    iniciarAutoplay();
+
+
+    /* ---------- 4. LO MEJOR DEL MES ----------
+       Cada fila del ranking guarda en atributos data-* la información
+       de su disco. Al pasar el ratón o pulsar una fila, se marca como
+       activa y cambian la portada, el vinilo y los textos del destacado. */
+    $(".ranking__fila").on("mouseenter click", function () {
+        var fila = $(this);
+
+        if (fila.hasClass("activa")) {
+            return;
+        }
+
+        $(".ranking__fila").removeClass("activa");
+        fila.addClass("activa");
+
+        var media = $("#destacado-media");
+        media.addClass("cambiando");
+
+        // Esperamos a que termine el fundido para cambiar el contenido
+        setTimeout(function () {
+            if (fila.data("portada")) {
+                media.removeClass("sin-imagen");
+                $("#destacado-portada").attr("src", fila.data("portada"))
+                    .attr("alt", "Portada de " + fila.data("titulo"));
+                $("#destacado-vinilo").attr("src", fila.data("vinilo"));
+            } else {
+                // Discos sin imagen: portada tipográfica con el nombre del disco
+                media.addClass("sin-imagen");
+                $("#destacado-texto").text(fila.find(".ranking__disco").text());
+            }
+
+            $("#destacado-num").text(fila.data("num"));
+            $("#destacado-titulo").text(fila.data("titulo"));
+            $("#destacado-desc").text(fila.data("desc"));
+            media.removeClass("cambiando");
+        }, 250);
+    });
+
+
+    /* ---------- 5. VALIDACIÓN DEL NEWSLETTER ----------
+       Comprobamos que el email no esté vacío y que tenga un formato
+       válido antes de dar la suscripción por hecha. */
+    $("#newsletter").on("submit", function (e) {
+        e.preventDefault();
+
+        var campo = $("#email");
+        var mensaje = $("#newsletter-mensaje");
+        var email = campo.val().trim();
+        var formato = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+        if (email === "") {
+            campo.addClass("error");
+            mensaje.removeClass("ok").addClass("error").text("Escribe tu email para suscribirte.");
+        } else if (!formato.test(email)) {
+            campo.addClass("error");
+            mensaje.removeClass("ok").addClass("error").text("Ese email no parece válido.");
+        } else {
+            campo.removeClass("error").val("");
+            mensaje.removeClass("error").addClass("ok").hide()
+                .text("¡Hecho! Te escribiremos con las novedades.").fadeIn(400);
+        }
+    });
+
+    // Al volver a escribir, quitamos el borde de error
+    $("#email").on("input", function () {
+        $(this).removeClass("error");
+    });
+
+
+    /* ---------- 6. AOS ----------
+       Anima los elementos que tienen el atributo data-aos al hacer scroll. */
+    AOS.init({
+        duration: 700,
+        offset: 80,
+        once: true
+    });
+
+
+    /* ---------- 7. TYPED.JS ----------
+       Escribe la frase de "Sobre nosotros". Para que se vea escribirse,
+       solo empieza cuando la frase entra en la pantalla. */
+    var typedIniciado = false;
+
+    function comprobarTyped() {
+        var posicionFrase = $("#typed").offset().top;
+        var finalPantalla = $(window).scrollTop() + $(window).height();
+
+        if (!typedIniciado && finalPantalla > posicionFrase + 50) {
+            typedIniciado = true;
+
+            new Typed("#typed", {
+                strings: ["VINILOS NUEVOS Y DE SEGUNDA MANO DESDE MADRID, PARA LOS QUE AÚN ESCUCHAN LOS DISCOS ENTEROS"],
+                typeSpeed: 35,
+                showCursor: true,
+                cursorChar: "_"
+            });
+
+            $(window).off("scroll", comprobarTyped);
+        }
+    }
+
+    $(window).on("scroll", comprobarTyped);
+    comprobarTyped();
+
 });
