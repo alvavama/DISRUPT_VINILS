@@ -23,8 +23,16 @@
         <div class="cabecera__barra">
             <a href="index.html" class="logo" aria-label="Disrupt Vinils, ir a la home">
                 <span class="logo__icono">
-                    <img src="img/logo.svg" alt="" class="logo__base" width="64" height="64">
-                    <img src="img/logo-hover.svg" alt="" class="logo__hover" width="64" height="64">
+                    <svg class="logo__disco" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+                        <rect width="64" height="64" fill="#1B1B1B"/>
+                        <circle cx="31.5" cy="32.5" r="26.5" fill="#ECECEC"/>
+                        <circle cx="31.5" cy="32.5" r="13.5" fill="#1B1B1B"/>
+                        <!-- Bandas que aparecen y giran al hacer hover -->
+                        <g class="logo__bandas">
+                            <path d="M53 32.5C53 20.6259 43.3741 11 31.5 11" stroke="#1B1B1B" stroke-width="13" fill="none"/>
+                            <path d="M31.5 54C19.6259 54 10 44.3741 10 32.5" stroke="#1B1B1B" stroke-width="13" fill="none"/>
+                        </g>
+                    </svg>
                 </span>
                 <span class="logo__nombre">DISRUPT VINILS</span>
             </a>
@@ -57,7 +65,7 @@
 
                     <article class="disco" data-aos="fade-up">
                         <div class="disco__media">
-                            <img src="img/utopia-vinilo.png" alt="" class="disco__vinilo" loading="lazy">
+                            <span class="disco__vinilo"><img src="img/utopia-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
                             <img src="img/utopia-portada.jpg" alt="Portada de Utopia, de Travis Scott" class="disco__portada" loading="lazy">
                         </div>
                         <div class="ficha acordeon__item">
@@ -84,7 +92,7 @@
 
                     <article class="disco" data-aos="fade-up" data-aos-delay="150">
                         <div class="disco__media">
-                            <img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo" loading="lazy">
+                            <span class="disco__vinilo"><img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
                             <img src="img/bodhiria-portada.jpg" alt="Portada de Bodhiria, de Judeline" class="disco__portada" loading="lazy">
                         </div>
                         <div class="ficha acordeon__item">
@@ -111,7 +119,7 @@
 
                     <article class="disco" data-aos="fade-up" data-aos-delay="300">
                         <div class="disco__media">
-                            <img src="img/lamadruga-vinilo.png" alt="" class="disco__vinilo" loading="lazy">
+                            <span class="disco__vinilo"><img src="img/lamadruga-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
                             <img src="img/lamadruga-portada.jpg" alt="Portada de La Madrugá, de Delaossa" class="disco__portada" loading="lazy">
                         </div>
                         <div class="ficha acordeon__item">
@@ -230,7 +238,7 @@
                     <div class="destacado" aria-live="polite">
                         <p class="destacado__badge">#<span id="destacado-num">1</span> DEL MES</p>
                         <div class="destacado__media disco__media" id="destacado-media">
-                            <img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo" id="destacado-vinilo">
+                            <span class="disco__vinilo"><img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo-img" id="destacado-vinilo"></span>
                             <img src="img/bodhiria-portada.jpg" alt="Portada de Bodhiria, de Judeline" class="disco__portada" id="destacado-portada">
                             <p class="destacado__sin-portada" id="destacado-texto"></p>
                         </div>
@@ -319,7 +327,18 @@
             <div class="pie__top">
                 <div class="pie__marca">
                     <a href="index.html" class="logo logo--invertido" aria-label="Disrupt Vinils, ir a la home">
-                        <span class="logo__icono"><img src="img/logo.svg" alt="" width="64" height="64"></span>
+                        <span class="logo__icono">
+                            <svg class="logo__disco" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+                                <rect width="64" height="64" fill="#1B1B1B"/>
+                                <circle cx="31.5" cy="32.5" r="26.5" fill="#ECECEC"/>
+                                <circle cx="31.5" cy="32.5" r="13.5" fill="#1B1B1B"/>
+                                <!-- Bandas que aparecen y giran al hacer hover -->
+                                <g class="logo__bandas">
+                                    <path d="M53 32.5C53 20.6259 43.3741 11 31.5 11" stroke="#1B1B1B" stroke-width="13" fill="none"/>
+                                    <path d="M31.5 54C19.6259 54 10 44.3741 10 32.5" stroke="#1B1B1B" stroke-width="13" fill="none"/>
+                                </g>
+                            </svg>
+                        </span>
                         <span class="logo__nombre">DISRUPT VINILS</span>
                     </a>
                     <p>Tienda de vinilos independiente · Madrid</p>

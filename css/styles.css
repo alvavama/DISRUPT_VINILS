@@ -158,14 +158,14 @@ button {
     position: sticky;
     top: 0;
     z-index: 10;
-    background-color: var(--color-claro);
+    background-color: transparent;   /* deja ver el contenido al hacer scroll */
 }
 
 .cabecera__barra {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px var(--espacio);
+    padding: 14px var(--espacio);
 }
 
 .logo {
@@ -174,32 +174,37 @@ button {
 }
 
 .logo__icono {
-    position: relative;
     flex-shrink: 0;
-    width: 52px;
-    height: 52px;
+    width: 44px;
+    height: 44px;
 }
 
-.logo__icono img {
-    position: absolute;
-    inset: 0;
+.logo__disco {
+    display: block;
     width: 100%;
     height: 100%;
-    transition: opacity var(--transicion), transform 0.6s ease;
 }
 
-/* El logo gira al pasar el ratón (variante hover de Figma) */
-.logo__hover {
+/* Logo (variante hover de Figma): aparecen dos bandas en el disco
+   y giran sin parar sobre su centro, como un disco girando */
+.logo__bandas {
     opacity: 0;
+    transform-origin: 31.5px 32.5px;   /* centro del disco en el viewBox */
+    transition: opacity var(--transicion);
+    animation: girar 1.4s linear infinite;
+    animation-play-state: paused;
 }
 
-.logo:hover .logo__base {
-    opacity: 0;
-}
-
-.logo:hover .logo__hover {
+.logo:hover .logo__bandas,
+.logo:focus-visible .logo__bandas {
     opacity: 1;
-    transform: rotate(180deg);
+    animation-play-state: running;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .logo__nombre {
@@ -209,7 +214,7 @@ button {
     background-color: var(--color-oscuro);
     color: var(--color-claro);
     font-family: var(--fuente-pixel);
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -221,14 +226,15 @@ button {
     justify-content: center;
     align-items: center;
     gap: 6px;
-    width: 52px;
-    height: 52px;
+    width: 44px;
+    height: 44px;
     border: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);   /* visible sobre secciones oscuras */
 }
 
 .menu-btn span {
     display: block;
-    width: 24px;
+    width: 20px;
     height: var(--borde);
     background-color: var(--color-oscuro);
     transition: transform var(--transicion), opacity var(--transicion);
@@ -256,6 +262,8 @@ button {
 .menu .boton {
     display: flex;
     width: 100%;
+    min-height: 44px;
+    font-size: 1.1rem;
 }
 
 .menu .boton + .boton {
@@ -291,18 +299,31 @@ button {
     object-fit: cover;
 }
 
+/* El contenedor del vinilo se desplaza fuera de la portada... */
 .disco__vinilo {
     position: absolute;
     top: 1.5%;
     left: 1.5%;
     width: 97%;
     height: 97%;
-    object-fit: contain;
     transition: transform 0.7s ease;
 }
 
 .disco__media:hover .disco__vinilo {
-    transform: translateX(32%) rotate(200deg);
+    transform: translateX(32%);
+}
+
+/* ...y la imagen del vinilo gira sobre sí misma sin parar mientras dura el hover */
+.disco__vinilo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: girar 3s linear infinite;
+    animation-play-state: paused;
+}
+
+.disco__media:hover .disco__vinilo-img {
+    animation-play-state: running;
 }
 
 /* Ficha del disco */
@@ -897,27 +918,27 @@ button {
     }
 
     .cabecera__barra {
-        padding-top: 24px;
-        padding-bottom: 24px;
+        padding-top: 18px;
+        padding-bottom: 18px;
     }
 
     .logo__icono {
-        width: 64px;
-        height: 64px;
+        width: 48px;
+        height: 48px;
     }
 
     .logo__nombre {
-        padding: 0 18px;
-        font-size: 2rem;
+        padding: 0 14px;
+        font-size: 1.4rem;
     }
 
     .menu-btn {
-        width: 64px;
-        height: 64px;
+        width: 48px;
+        height: 48px;
     }
 
     .menu-btn span {
-        width: 30px;
+        width: 24px;
     }
 
     .disco {
@@ -993,7 +1014,7 @@ button {
         align-items: center;
         max-width: var(--ancho-max);
         margin: 0 auto;
-        padding: 28px var(--espacio);
+        padding: 20px var(--espacio);
     }
 
     .cabecera__barra {
@@ -1008,14 +1029,15 @@ button {
        al plegar el menú en móvil; así el menú siempre se ve en escritorio */
     .menu {
         display: flex !important;
-        gap: 27px;
+        gap: 16px;
         padding: 0;
     }
 
     .menu .boton {
         width: auto;
-        min-height: 64px;
-        padding: 0 38px;
+        min-height: 48px;
+        padding: 0 24px;
+        font-size: 1.25rem;
     }
 
     .menu .boton + .boton {
@@ -1032,7 +1054,7 @@ button {
     }
 
     .disco__media:hover .disco__vinilo {
-        transform: translateX(52%) rotate(200deg);
+        transform: translateX(52%);
     }
 
     .subtitulo {
