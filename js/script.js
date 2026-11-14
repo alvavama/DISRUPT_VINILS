@@ -187,7 +187,8 @@ $(document).ready(function () {
     /* ---------- 4. LO MEJOR DEL MES ----------
        Cada fila del ranking guarda en atributos data-* la información
        de su disco. Al pasar el ratón o pulsar una fila, se marca como
-       activa y cambian la portada, el vinilo y los textos del destacado. */
+       activa y cambian la portada, el vinilo y los textos del destacado.
+       Además, el vinilo del destacado se anima mientras estás en el ranking. */
     $(".ranking__fila").on("mouseenter click", function () {
         var fila = $(this);
 
@@ -212,6 +213,18 @@ $(document).ready(function () {
             $("#destacado-desc").text(fila.data("desc"));
             media.removeClass("cambiando");
         }, 250);
+    });
+
+
+    // Mientras el ratón (o el foco del teclado) está sobre el ranking,
+    // el vinilo del destacado sale de la portada y gira, igual que al
+    // pasar por encima de la propia portada
+    $(".ranking").on("mouseenter focusin", function () {
+        $("#destacado-media").addClass("animado");
+    });
+
+    $(".ranking").on("mouseleave focusout", function () {
+        $("#destacado-media").removeClass("animado");
     });
 
 
