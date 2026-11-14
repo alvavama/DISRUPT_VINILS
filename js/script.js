@@ -49,77 +49,101 @@ $(function () {
   });
 
 
-  /* ---------- 3. SLIDER DE NOTICIAS (jQuery, sin librerías) ---------- */
+  /* ---------- 3. SLIDER DE NOTICIAS con scroll horizontal (jQuery, sin librerías) ----------
+     El viewport (.slider) tiene overflow-x: auto, así que se puede recorrer con
+     el trackpad, la rueda + Shift o el dedo. jQuery añade: flechas, puntos,
+     arrastre con el ratón y teclado, todos moviendo el scrollLeft del viewport. */
   var $slider = $('.slider');
   var $pista = $('.slider__pista');
   var $tarjetas = $pista.children('.noticia');
   var $prev = $('.flecha--prev');
   var $next = $('.flecha--next');
   var $puntos = $('.slider__puntos');
-  var indice = 0;
 
-  // Cuántas tarjetas caben a la vez según el ancho del slider
-  function tarjetasVisibles() {
-    var anchoTarjeta = $tarjetas.first().outerWidth();
-    return Math.max(1, Math.round($slider.width() / anchoTarjeta));
+  // Distancia entre el inicio de una tarjeta y la siguiente
+  function paso() {
+    var gap = parseFloat($pista.css('column-gap')) || 0;
+    return $tarjetas.first().outerWidth() + gap;
   }
 
-  function maxIndice() {
-    return Math.max(0, $tarjetas.length - tarjetasVisibles());
+  function scrollMaximo() {
+    return $slider[0].scrollWidth - $slider[0].clientWidth;
   }
 
-  // Crea un punto por cada posición posible
-  function crearPuntos() {
-    $puntos.empty();
-    for (var i = 0; i <= maxIndice(); i++) {
-      $('<button>', {
-        'class': 'slider__punto',
-        type: 'button',
-        role: 'tab',
-        'aria-label': 'Ir a la noticia ' + (i + 1)
-      }).data('indice', i).appendTo($puntos);
-    }
+  // Tarjeta que está al principio del viewport
+  function indiceActual() {
+    if ($slider.scrollLeft() >= scrollMaximo() - 2) { return $tarjetas.length - 1; }
+    return Math.round($slider.scrollLeft() / paso());
   }
 
-  function moverSlider() {
-    var gap = parseFloat($pista.css('gap')) || 0;
-    var paso = $tarjetas.first().outerWidth() + gap;
-
-    indice = Math.min(Math.max(indice, 0), maxIndice());
-    $pista.css('transform', 'translateX(' + (-indice * paso) + 'px)');
-
-    $prev.prop('disabled', indice === 0);
-    $next.prop('disabled', indice === maxIndice());
-    $puntos.children().removeClass('activo').attr('aria-selected', false)
-      .eq(indice).addClass('activo').attr('aria-selected', true);
+  function irA(indice) {
+    indice = Math.min(Math.max(indice, 0), $tarjetas.length - 1);
+    var destino = Math.min(indice * paso(), scrollMaximo());
+    $slider.stop().animate({ scrollLeft: destino }, 450);
   }
 
-  $prev.on('click', function () { indice--; moverSlider(); });
-  $next.on('click', function () { indice++; moverSlider(); });
-
-  $puntos.on('click', '.slider__punto', function () {
-    indice = $(this).data('indice');
-    moverSlider();
+  // Un punto por tarjeta
+  $tarjetas.each(function (i) {
+    $('<button>', {
+      'class': 'slider__punto',
+      type: 'button',
+      'aria-label': 'Ir a la noticia ' + (i + 1)
+    }).data('indice', i).appendTo($puntos);
   });
 
-  // Flechas del teclado cuando el foco está dentro del slider
+  // Actualiza puntos y flechas según la posición del scroll
+  function actualizarSlider() {
+    var actual = indiceActual();
+    $puntos.children().removeClass('activo').removeAttr('aria-current')
+      .eq(actual).addClass('activo').attr('aria-current', 'true');
+    $prev.prop('disabled', $slider.scrollLeft() <= 2);
+    $next.prop('disabled', $slider.scrollLeft() >= scrollMaximo() - 2);
+  }
+
+  $prev.on('click', function () { irA(indiceActual() - 1); });
+  $next.on('click', function () {
+    // Si estamos entre dos tarjetas, avanzamos a la siguiente completa
+    irA(Math.floor($slider.scrollLeft() / paso() + 0.05) + 1);
+  });
+  $puntos.on('click', '.slider__punto', function () { irA($(this).data('indice')); });
+  $slider.on('scroll', actualizarSlider);
+
+  // Teclado: flechas izquierda/derecha cuando el foco está en la sección
   $('#noticias').on('keydown', function (e) {
-    if (e.key === 'ArrowLeft') { $prev.trigger('click'); }
-    if (e.key === 'ArrowRight') { $next.trigger('click'); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); $prev.trigger('click'); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); $next.trigger('click'); }
   });
 
-  // Recalcular al cambiar el tamaño de la ventana
-  var temporizador;
-  $(window).on('resize', function () {
-    clearTimeout(temporizador);
-    temporizador = setTimeout(function () {
-      crearPuntos();
-      moverSlider();
-    }, 150);
+  // Arrastrar con el ratón para hacer scroll
+  var arrastre = { activo: false, x: 0, scroll: 0, movido: false };
+
+  $slider.on('mousedown', function (e) {
+    if (e.which !== 1) { return; }
+    e.preventDefault(); // evita seleccionar texto o arrastrar la imagen
+    arrastre = { activo: true, x: e.pageX, scroll: $slider.scrollLeft(), movido: false };
+    $slider.stop();
   });
 
-  crearPuntos();
-  moverSlider();
+  $(document).on('mousemove', function (e) {
+    if (!arrastre.activo) { return; }
+    var distancia = e.pageX - arrastre.x;
+    if (Math.abs(distancia) > 5) {
+      arrastre.movido = true;
+      $slider.addClass('arrastrando');
+    }
+    $slider.scrollLeft(arrastre.scroll - distancia);
+  });
+
+  $(document).on('mouseup', function () {
+    if (!arrastre.activo) { return; }
+    arrastre.activo = false;
+    // Al soltar, se ajusta a la tarjeta más cercana
+    if (arrastre.movido) { irA(Math.round($slider.scrollLeft() / paso())); }
+    setTimeout(function () { $slider.removeClass('arrastrando'); }, 0);
+  });
+
+  $(window).on('resize', actualizarSlider);
+  actualizarSlider();
 
 
   /* ---------- 4. LO MEJOR DEL MES: ranking que cambia el destacado (jQuery) ---------- */

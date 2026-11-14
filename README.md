@@ -24,7 +24,7 @@ Web interactiva de una tienda de vinilos independiente en Madrid.
 
 | Interacción | Dónde | Librería |
 | --- | --- | --- |
-| Slider / carrusel de noticias (flechas, puntos, teclado, responsive) | Noticias y novedades | jQuery (sin librerías de sliders) |
+| Slider de noticias con scroll horizontal (trackpad, táctil, arrastre con ratón, flechas, puntos y teclado) | Noticias y novedades | jQuery (sin librerías de sliders) |
 | Menú de navegación responsive (hamburguesa + `slideToggle`) | Cabecera (tablet y móvil) | jQuery |
 | Acordeón "VER MÁS / VER MENOS" con ficha del disco | Recién llegado | jQuery |
 | Ranking que cambia el disco destacado | Lo mejor del mes | jQuery |

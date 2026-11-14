@@ -32,7 +32,7 @@
   --ancho-max: 1220px;
   --padding-lateral: 50px;
   --espacio-seccion: 90px;
-  --gap-slider: 27px;
+  --gap-slider: 37px;
 
   --transicion: 0.3s ease;
 }
@@ -281,19 +281,33 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 .flecha:focus-visible { background: var(--claro); color: var(--oscuro); }
 .flecha:disabled { opacity: 0.3; cursor: default; }
 
-.slider { overflow: hidden; }
+/* Viewport con scroll horizontal: sangra hasta el borde derecho de la pantalla */
+.slider {
+  margin-right: calc((100% - 100vw) / 2);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 18px;               /* espacio para la barra de scroll */
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: var(--claro) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.slider.arrastrando { cursor: grabbing; user-select: none; }
+.slider.arrastrando a { pointer-events: none; }
 .slider__pista {
   display: flex;
   gap: var(--gap-slider);
-  transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+  width: max-content;
+  padding-right: var(--padding-lateral);
 }
 
 .noticia {
-  flex: 0 0 calc((100% - 2 * var(--gap-slider)) / 3);
+  flex: 0 0 300px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+.noticia__img { -webkit-user-drag: none; }
 .noticia__img {
   width: 100%;
   aspect-ratio: 3 / 4;
@@ -409,7 +423,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 .ranking__fila.activa .ranking__artista { color: var(--gris); }
 
 /* ---------- 8. Sobre nosotros ---------- */
-#sobre-nosotros .titulo-seccion { margin-bottom: 40px; }
+#sobre-nosotros .titulo-seccion { margin-bottom: 36px; }
 
 .statement {
   min-height: 3.6em;
@@ -438,7 +452,8 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 
 .sobre {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: minmax(0, 540px) minmax(0, 300px);
+  justify-content: space-between;
   gap: 60px;
 }
 .sobre__texto { font-size: 1.1875rem; line-height: 1.45; }
@@ -526,7 +541,6 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
   .disco { grid-template-columns: 1fr 1fr; gap: 24px; }
   .disco__media { width: 75%; }
 
-  .noticia { flex-basis: calc((100% - var(--gap-slider)) / 2); }
 
   .mejor { grid-template-columns: 1fr; }
   .destacado__media { width: min(65%, 405px); }
@@ -554,7 +568,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 
   .slider__controles { order: 2; }
   .flecha { width: 52px; height: 52px; }
-  .noticia { flex-basis: 85%; }
+  .noticia { flex-basis: 78vw; }
 
   .destacado__media { width: 72%; }
   .ranking__fila { padding: 14px 16px; gap: 12px; }
