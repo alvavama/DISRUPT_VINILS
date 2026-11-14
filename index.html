@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disrupt Vinils · Tienda de vinilos en Madrid</title>
+  <meta name="description" content="Disrupt Vinils: tienda de vinilos independiente en Madrid. Novedades, segunda mano, eventos y lo mejor del mes.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+
+  <!-- Tipografía pixel (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ================= CABECERA ================= -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__inner">
+      <a href="index.html" class="marca" aria-label="Disrupt Vinils, ir a la home">
+        <span class="marca__logo">
+          <img src="img/logo.svg" alt="" class="marca__logo-base" width="64" height="64">
+          <img src="img/logo-hover.svg" alt="" class="marca__logo-hover" width="64" height="64">
+        </span>
+        <span class="marca__nombre">DISRUPT VINILS</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="menu" id="menu-principal" aria-label="Navegación principal">
+        <ul class="menu__lista">
+          <li><a href="catalogo.html" class="boton boton--borde">CATÁLOGO</a></li>
+          <li><a href="#sobre-nosotros" class="boton boton--borde">SOBRE NOSOTROS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= RECIÉN LLEGADO (NEW IN) ================= -->
+    <section class="seccion seccion--clara" id="new-in" aria-labelledby="titulo-new-in">
+      <div class="contenedor">
+        <h2 class="titulo-seccion" id="titulo-new-in" data-aos="fade-right">RECIÉN LLEGADO</h2>
+
+        <div class="discos">
+          <!-- Disco 1 -->
+          <article class="disco" data-aos="fade-up">
+            <div class="disco__media">
+              <img src="img/utopia-vinilo.png" alt="" class="disco__vinilo" loading="lazy">
+              <img src="img/utopia-portada.jpg" alt="Portada de Utopia, de Travis Scott" class="disco__portada" loading="lazy">
+            </div>
+            <div class="ficha">
+              <h3 class="ficha__titulo">UTOPIA</h3>
+              <p class="ficha__fila"><span>TRAVIS SCOTT</span><span>2023</span></p>
+              <ul class="ficha__generos">
+                <li>RAP</li><li>TRAP</li><li>PSICODELIA</li><li>HIP HOP</li>
+              </ul>
+              <p class="ficha__precio">35€</p>
+              <div class="ficha__extra" id="extra-utopia">
+                <dl class="ficha__datos">
+                  <div><dt>Formato</dt><dd>2 × LP 12"</dd></div>
+                  <div><dt>Color</dt><dd>Vinilo rojo</dd></div>
+                  <div><dt>Estado</dt><dd>Nuevo</dd></div>
+                </dl>
+                <a class="ficha__link" href="https://open.spotify.com/search/Utopia%20Travis%20Scott" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
+              </div>
+              <button class="boton-desplegar" type="button" aria-expanded="false" aria-controls="extra-utopia">
+                <span class="boton-desplegar__texto">VER MÁS</span>
+                <svg class="boton-desplegar__icono" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Disco 2 -->
+          <article class="disco" data-aos="fade-up">
+            <div class="disco__media">
+              <img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo" loading="lazy">
+              <img src="img/bodhiria-portada.jpg" alt="Portada de Bodhiria, de Judeline" class="disco__portada" loading="lazy">
+            </div>
+            <div class="ficha">
+              <h3 class="ficha__titulo">BODHIRIA</h3>
+              <p class="ficha__fila"><span>JUDELINE</span><span>2024</span></p>
+              <ul class="ficha__generos">
+                <li>RAP</li><li>UNDER</li><li>INDIE</li><li>POP</li>
+              </ul>
+              <p class="ficha__precio">24,95€</p>
+              <div class="ficha__extra" id="extra-bodhiria">
+                <dl class="ficha__datos">
+                  <div><dt>Formato</dt><dd>LP 12"</dd></div>
+                  <div><dt>Color</dt><dd>Vinilo blanco</dd></div>
+                  <div><dt>Estado</dt><dd>Nuevo</dd></div>
+                </dl>
+                <a class="ficha__link" href="https://open.spotify.com/search/Bodhiria%20Judeline" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
+              </div>
+              <button class="boton-desplegar" type="button" aria-expanded="false" aria-controls="extra-bodhiria">
+                <span class="boton-desplegar__texto">VER MÁS</span>
+                <svg class="boton-desplegar__icono" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Disco 3 -->
+          <article class="disco" data-aos="fade-up">
+            <div class="disco__media">
+              <img src="img/lamadruga-vinilo.png" alt="" class="disco__vinilo" loading="lazy">
+              <img src="img/lamadruga-portada.jpg" alt="Portada de La Madrugá, de Delaossa" class="disco__portada" loading="lazy">
+            </div>
+            <div class="ficha">
+              <h3 class="ficha__titulo">LA MADRUGÁ</h3>
+              <p class="ficha__fila"><span>DELAOSSA</span><span>2025</span></p>
+              <ul class="ficha__generos">
+                <li>RAP</li><li>TRAP</li><li>ROCK</li><li>POP</li>
+              </ul>
+              <p class="ficha__precio">45€</p>
+              <div class="ficha__extra" id="extra-madruga">
+                <dl class="ficha__datos">
+                  <div><dt>Formato</dt><dd>LP 12"</dd></div>
+                  <div><dt>Color</dt><dd>Vinilo blanco</dd></div>
+                  <div><dt>Estado</dt><dd>Nuevo</dd></div>
+                </dl>
+                <a class="ficha__link" href="https://open.spotify.com/search/La%20Madrug%C3%A1%20Delaossa" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
+              </div>
+              <button class="boton-desplegar" type="button" aria-expanded="false" aria-controls="extra-madruga">
+                <span class="boton-desplegar__texto">VER MÁS</span>
+                <svg class="boton-desplegar__icono" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NOTICIAS Y NOVEDADES (slider jQuery) ================= -->
+    <section class="seccion seccion--oscura" id="noticias" aria-labelledby="titulo-noticias">
+      <div class="contenedor">
+        <div class="cabecera-seccion">
+          <h2 class="titulo-seccion" id="titulo-noticias" data-aos="fade-right">NOTICIAS Y NOVEDADES</h2>
+          <div class="slider__controles">
+            <button class="flecha flecha--prev" type="button" aria-label="Noticia anterior">
+              <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+            </button>
+            <button class="flecha flecha--next" type="button" aria-label="Noticia siguiente">
+              <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="subtitulo">Eventos, firmas, ediciones limitadas y todo lo que pasa en la tienda.</p>
+
+        <div class="slider">
+          <div class="slider__pista">
+            <article class="noticia">
+              <img src="img/evento-listening.jpg" alt="Cartel de la listening party Noche Club" class="noticia__img" loading="lazy">
+              <p class="noticia__meta"><time class="noticia__fecha" datetime="2026-11-21">21 NOV</time><span>EVENTO</span></p>
+              <h3 class="noticia__titulo">LISTENING PARTY NOCHE CLUB</h3>
+              <p class="noticia__texto">Escuchamos de principio a fin los discos de club que más han sonado este año. Entrada libre.</p>
+              <a href="#noticias" class="noticia__link">LEER MÁS →</a>
+            </article>
+            <article class="noticia">
+              <img src="img/bodhiria-portada.jpg" alt="Judeline, portada de Bodhiria" class="noticia__img" loading="lazy">
+              <p class="noticia__meta"><time class="noticia__fecha" datetime="2026-11-29">29 NOV</time><span>FIRMA</span></p>
+              <h3 class="noticia__titulo">FIRMA DE DISCOS: JUDELINE</h3>
+              <p class="noticia__texto">Ven a conocerla en tienda y llévate tu copia de Bodhiria en vinilo blanco firmada.</p>
+              <a href="#noticias" class="noticia__link">LEER MÁS →</a>
+            </article>
+            <article class="noticia">
+              <img src="img/evento-djset.jpg" alt="Cartel del DJ set solo vinilo" class="noticia__img" loading="lazy">
+              <p class="noticia__meta"><time class="noticia__fecha" datetime="2026-12-06">06 DIC</time><span>DJ SET</span></p>
+              <h3 class="noticia__titulo">SOLO VINILO: DJ SET EN TIENDA</h3>
+              <p class="noticia__texto">Tres DJs pinchando solo vinilo en el escaparate. Trae tus discos y cámbialos.</p>
+              <a href="#noticias" class="noticia__link">LEER MÁS →</a>
+            </article>
+            <article class="noticia">
+              <img src="img/evento-mercadillo.jpg" alt="Cartel del mercadillo de segunda mano" class="noticia__img" loading="lazy">
+              <p class="noticia__meta"><time class="noticia__fecha" datetime="2026-12-13">13 DIC</time><span>MERCADILLO</span></p>
+              <h3 class="noticia__titulo">MERCADILLO DE SEGUNDA MANO</h3>
+              <p class="noticia__texto">Cajas de segunda mano a partir de 5€. Rebusca, escucha y llévate joyas.</p>
+              <a href="#noticias" class="noticia__link">LEER MÁS →</a>
+            </article>
+            <article class="noticia">
+              <img src="img/utopia-portada.jpg" alt="Portada de Utopia, de Travis Scott" class="noticia__img" loading="lazy">
+              <p class="noticia__meta"><time class="noticia__fecha" datetime="2026-12-20">20 DIC</time><span>REPOSICIÓN</span></p>
+              <h3 class="noticia__titulo">UTOPIA VUELVE EN VINILO ROJO</h3>
+              <p class="noticia__texto">Reponemos la edición en doble vinilo rojo. Resérvala en tienda antes de que vuele.</p>
+              <a href="#noticias" class="noticia__link">LEER MÁS →</a>
+            </article>
+          </div>
+        </div>
+        <div class="slider__puntos" role="tablist" aria-label="Seleccionar grupo de noticias"></div>
+      </div>
+    </section>
+
+    <!-- ================= BANDA MARQUEE ================= -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__pista">
+        <span>NEW IN</span><span>●</span><span>VINILOS DE COLOR</span><span>●</span><span>EDICIONES LIMITADAS</span><span>●</span><span>SEGUNDA MANO</span><span>●</span>
+        <span>NEW IN</span><span>●</span><span>VINILOS DE COLOR</span><span>●</span><span>EDICIONES LIMITADAS</span><span>●</span><span>SEGUNDA MANO</span><span>●</span>
+      </div>
+    </div>
+
+    <!-- ================= LO MEJOR DEL MES (ranking + destacado jQuery) ================= -->
+    <section class="seccion seccion--clara" id="lo-mejor" aria-labelledby="titulo-lo-mejor">
+      <div class="contenedor">
+        <div class="cabecera-seccion">
+          <h2 class="titulo-seccion" id="titulo-lo-mejor" data-aos="fade-right">LO MEJOR DEL MES</h2>
+          <p class="mes">NOVIEMBRE 2026</p>
+        </div>
+
+        <div class="mejor">
+          <div class="destacado" aria-live="polite">
+            <p class="destacado__badge">#<span class="js-dest-num">1</span> DEL MES</p>
+            <div class="destacado__media disco__media">
+              <img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo js-dest-vinilo">
+              <img src="img/bodhiria-portada.jpg" alt="Portada de Bodhiria, de Judeline" class="disco__portada js-dest-portada">
+              <p class="destacado__sin-portada js-dest-texto"></p>
+            </div>
+            <h3 class="destacado__titulo js-dest-titulo">BODHIRIA — JUDELINE</h3>
+            <p class="destacado__texto js-dest-desc">El disco más vendido de noviembre. Edición en vinilo blanco.</p>
+          </div>
+
+          <div class="ranking-bloque" data-aos="fade-left">
+            <ol class="ranking">
+              <li>
+                <button type="button" class="ranking__fila activa" data-num="1" data-titulo="BODHIRIA — JUDELINE" data-portada="img/bodhiria-portada.jpg" data-vinilo="img/bodhiria-vinilo.png" data-desc="El disco más vendido de noviembre. Edición en vinilo blanco.">
+                  <span class="ranking__num">01</span>
+                  <span class="ranking__info"><span class="ranking__disco">BODHIRIA</span><span class="ranking__artista">JUDELINE</span></span>
+                  <span class="ranking__precio">24,95€</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="ranking__fila" data-num="2" data-titulo="LA MADRUGÁ — DELAOSSA" data-portada="img/lamadruga-portada.jpg" data-vinilo="img/lamadruga-vinilo.png" data-desc="El debut de Delaossa sigue entre los favoritos de la tienda.">
+                  <span class="ranking__num">02</span>
+                  <span class="ranking__info"><span class="ranking__disco">LA MADRUGÁ</span><span class="ranking__artista">DELAOSSA</span></span>
+                  <span class="ranking__precio">45€</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="ranking__fila" data-num="3" data-titulo="UTOPIA — TRAVIS SCOTT" data-portada="img/utopia-portada.jpg" data-vinilo="img/utopia-vinilo.png" data-desc="Doble vinilo rojo. Un clásico que no deja de venderse.">
+                  <span class="ranking__num">03</span>
+                  <span class="ranking__info"><span class="ranking__disco">UTOPIA</span><span class="ranking__artista">TRAVIS SCOTT</span></span>
+                  <span class="ranking__precio">35€</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="ranking__fila" data-num="4" data-titulo="LUX — ROSALÍA" data-desc="Uno de los lanzamientos más esperados del año, ya en tienda.">
+                  <span class="ranking__num">04</span>
+                  <span class="ranking__info"><span class="ranking__disco">LUX</span><span class="ranking__artista">ROSALÍA</span></span>
+                  <span class="ranking__precio">39,99€</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="ranking__fila" data-num="5" data-titulo="DTMF — BAD BUNNY" data-desc="Sigue siendo uno de los discos más pedidos en el mostrador.">
+                  <span class="ranking__num">05</span>
+                  <span class="ranking__info"><span class="ranking__disco">DTMF</span><span class="ranking__artista">BAD BUNNY</span></span>
+                  <span class="ranking__precio">42€</span>
+                </button>
+              </li>
+            </ol>
+            <a href="catalogo.html" class="boton boton--borde">CATÁLOGO</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SOBRE NOSOTROS ================= -->
+    <section class="seccion seccion--clara seccion--borde" id="sobre-nosotros" aria-labelledby="titulo-sobre">
+      <div class="contenedor">
+        <h2 class="titulo-seccion" id="titulo-sobre" data-aos="fade-right">SOBRE NOSOTROS</h2>
+
+        <p class="statement">
+          <span class="js-typed" data-texto="VINILOS NUEVOS Y DE SEGUNDA MANO DESDE MADRID, PARA LOS QUE AÚN ESCUCHAN LOS DISCOS ENTEROS"></span>
+          <noscript>VINILOS NUEVOS Y DE SEGUNDA MANO DESDE MADRID, PARA LOS QUE AÚN ESCUCHAN LOS DISCOS ENTEROS</noscript>
+        </p>
+
+        <ul class="datos">
+          <li class="dato" data-aos="zoom-in"><strong>+2.000</strong><span>VINILOS EN TIENDA</span></li>
+          <li class="dato" data-aos="zoom-in" data-aos-delay="100"><strong>2019</strong><span>ABIERTOS DESDE</span></li>
+          <li class="dato" data-aos="zoom-in" data-aos-delay="200"><strong>4</strong><span>EVENTOS AL MES</span></li>
+        </ul>
+
+        <div class="sobre">
+          <p class="sobre__texto">Disrupt Vinils nace en Lavapiés como un pequeño local de cajas y tocadiscos. Hoy seleccionamos a mano novedades, reediciones y segunda mano de pop, jazz, trap y soul, y organizamos escuchas, firmas y DJ sets cada semana.</p>
+          <div class="sobre__info">
+            <h3>DIRECCIÓN</h3>
+            <address>C/ del Ave María 23, 28012 Madrid</address>
+            <h3>HORARIO</h3>
+            <p>Mar — Sáb · 11:00 – 21:00</p>
+            <a href="#sobre-nosotros" class="boton boton--borde">SOBRE NOSOTROS</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie__top">
+        <div class="pie__marca">
+          <a href="index.html" class="marca marca--invertida" aria-label="Disrupt Vinils, ir a la home">
+            <span class="marca__logo"><img src="img/logo.svg" alt="" width="64" height="64"></span>
+            <span class="marca__nombre">DISRUPT VINILS</span>
+          </a>
+          <p>Tienda de vinilos independiente · Madrid</p>
+        </div>
+
+        <nav class="pie__col" aria-label="Navegación del pie">
+          <h2>NAVEGA</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
+          </ul>
+        </nav>
+
+        <nav class="pie__col" aria-label="Géneros">
+          <h2>GÉNEROS</h2>
+          <ul>
+            <li><a href="catalogo.html#pop">Pop</a></li>
+            <li><a href="catalogo.html#jazz">Jazz</a></li>
+            <li><a href="catalogo.html#trap">Trap</a></li>
+            <li><a href="catalogo.html#soul">Soul</a></li>
+          </ul>
+        </nav>
+
+        <div class="pie__col newsletter">
+          <h2>NEWSLETTER</h2>
+          <p>Novedades y eventos, una vez al mes.</p>
+          <form class="newsletter__form" novalidate>
+            <label for="email" class="sr-only">Tu email</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" autocomplete="email">
+            <button type="submit">SUSCRIBIRME</button>
+            <p class="newsletter__msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="pie__bottom">
+        <p>© 2026 DISRUPT VINILS · MADRID</p>
+        <ul class="pie__redes">
+          <li><a href="https://www.instagram.com" target="_blank" rel="noopener">INSTAGRAM</a></li>
+          <li><a href="https://www.tiktok.com" target="_blank" rel="noopener">TIKTOK</a></li>
+          <li><a href="https://open.spotify.com" target="_blank" rel="noopener">SPOTIFY</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Librerías desde CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
