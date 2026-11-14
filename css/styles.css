@@ -614,23 +614,6 @@ button {
     opacity: 0;
 }
 
-/* Portada tipográfica para los discos sin imagen */
-.destacado__sin-portada {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: none;
-    place-items: center;
-    background-color: var(--color-oscuro);
-    color: var(--color-claro);
-    font-family: var(--fuente-pixel);
-    font-size: 3rem;
-}
-
-.destacado__media.sin-imagen .destacado__sin-portada {
-    display: grid;
-}
-
 .destacado__titulo {
     font-family: var(--fuente-pixel);
     font-size: 1.875rem;
@@ -1075,10 +1058,6 @@ button {
 
     .destacado__media {
         width: 100%;
-    }
-
-    .destacado__sin-portada {
-        font-size: 6rem;
     }
 
     .sobre {
