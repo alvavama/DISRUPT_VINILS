@@ -203,16 +203,9 @@ $(document).ready(function () {
 
         // Esperamos a que termine el fundido para cambiar el contenido
         setTimeout(function () {
-            if (fila.data("portada")) {
-                media.removeClass("sin-imagen");
-                $("#destacado-portada").attr("src", fila.data("portada"))
-                    .attr("alt", "Portada de " + fila.data("titulo"));
-                $("#destacado-vinilo").attr("src", fila.data("vinilo"));
-            } else {
-                // Discos sin imagen: portada tipográfica con el nombre del disco
-                media.addClass("sin-imagen");
-                $("#destacado-texto").text(fila.find(".ranking__disco").text());
-            }
+            $("#destacado-portada").attr("src", fila.data("portada"))
+                .attr("alt", "Portada de " + fila.data("titulo"));
+            $("#destacado-vinilo").attr("src", fila.data("vinilo"));
 
             $("#destacado-num").text(fila.data("num"));
             $("#destacado-titulo").text(fila.data("titulo"));
