@@ -286,7 +286,7 @@ button {
 /* Portada + vinilo: el vinilo sale de la funda al pasar el ratón */
 .disco__media {
     position: relative;
-    width: 72%;
+    width: 62%;              /* deja sitio al vinilo, que sobresale casi media portada */
     max-width: 405px;
     aspect-ratio: 1 / 1;
 }
@@ -307,7 +307,7 @@ button {
     left: 1.5%;
     width: 97%;
     height: 97%;
-    transform: translateX(32%);
+    transform: translateX(52%);   /* misma salida que en escritorio */
     transition: transform 0.7s ease;
 }
 
@@ -598,14 +598,14 @@ button {
 }
 
 /* Disco destacado en móvil y tablet: más grande y centrado.
-   --ancho es el tamaño de la portada; el vinilo sobresale un 30% más
-   por la derecha, así que un margen derecho de ese 30% centra el conjunto */
+   --ancho es el tamaño de la portada; el vinilo sobresale un 49% más
+   por la derecha, así que un margen derecho de ese 49% centra el conjunto */
 .destacado__media {
-    --ancho: 74%;
+    --ancho: 64%;
     width: var(--ancho);
     max-width: none;
     align-self: center;
-    margin-right: calc(var(--ancho) * 0.3);
+    margin-right: calc(var(--ancho) * 0.49);
     transition: opacity 0.25s ease;
 }
 
@@ -930,7 +930,7 @@ button {
     }
 
     .disco__media {
-        width: 80%;
+        width: 65%;
     }
 
     .flecha {
