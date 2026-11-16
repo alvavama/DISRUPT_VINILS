@@ -7,7 +7,7 @@
 :root {
     --color-claro: #ECECEC;
     --color-oscuro: #1B1B1B;
-    --color-suave: #D3CACA;        /* texto secundario de las fichas */
+    --color-suave: #D3CACA;        /* texto secundario sobre fondo oscuro */
     --color-suave-oscuro: #8C8585; /* texto secundario con más contraste */
     --color-error: #FF8A8A;
 
@@ -340,7 +340,7 @@ button {
     display: flex;
     justify-content: space-between;
     gap: 8px;
-    color: var(--color-suave);
+    color: var(--color-oscuro);
     font-size: 1.125rem;
 }
 
@@ -352,7 +352,7 @@ button {
 
 .ficha__precio {
     margin-bottom: 24px;
-    color: var(--color-suave);
+    color: var(--color-oscuro);
     font-size: 1.125rem;
     font-weight: 700;
 }
