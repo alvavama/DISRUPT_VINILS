@@ -7,6 +7,9 @@
    5. Validación del newsletter (jQuery)
    6. AOS (Animate On Scroll)
    7. Typed.js
+   8. Filtro por géneros del catálogo (jQuery)
+   El mismo archivo sirve para index.html y catalogo.html: cada bloque
+   solo hace algo si su sección existe en la página.
    ========================================================= */
 
 $(document).ready(function () {
@@ -180,8 +183,11 @@ $(document).ready(function () {
         }
     });
 
-    actualizarPuntos();
-    iniciarAutoplay();
+    // Solo en la home: el catálogo no tiene slider
+    if (total > 0) {
+        actualizarPuntos();
+        iniciarAutoplay();
+    }
 
 
     /* ---------- 4. LO MEJOR DEL MES ----------
@@ -290,7 +296,83 @@ $(document).ready(function () {
         }
     }
 
-    $(window).on("scroll", comprobarTyped);
-    comprobarTyped();
+    // Solo en la home: el catálogo no tiene la frase de "Sobre nosotros"
+    if ($("#typed").length) {
+        $(window).on("scroll", comprobarTyped);
+        comprobarTyped();
+    }
+
+
+    /* ---------- 8. FILTRO DEL CATÁLOGO ----------
+       El botón FILTRAR despliega la lista de géneros con slideToggle().
+       Cada disco guarda sus géneros en data-generos ("trap pop"...).
+       Al elegir un género, se muestran con fadeIn() los discos que lo
+       tienen y se ocultan con fadeOut() los demás. */
+    var discos = $(".catalogo__lista .disco");
+
+    // Abrir y cerrar la lista de géneros
+    $(".filtro__boton").on("click", function () {
+        $(".filtro__lista").slideToggle(200);
+        $(this).toggleClass("abierto");
+        $(this).attr("aria-expanded", $(this).hasClass("abierto"));
+    });
+
+    // Si se pulsa fuera del filtro, la lista se cierra
+    $(document).on("click", function (e) {
+        if (!$(e.target).closest(".filtro").length && $(".filtro__boton").hasClass("abierto")) {
+            $(".filtro__boton").trigger("click");
+        }
+    });
+
+    function filtrar(genero) {
+        var visibles = 0;
+
+        // Marcamos la opción elegida y cambiamos el texto del botón
+        $(".filtro__opcion").removeClass("activo");
+        $('.filtro__opcion[data-genero="' + genero + '"]').addClass("activo");
+        $(".filtro__texto").text(genero === "todos" ? "FILTRAR" : genero.toUpperCase());
+
+        discos.each(function () {
+            // data-generos puede tener varios géneros separados por espacios
+            var generos = $(this).data("generos").split(" ");
+
+            if (genero === "todos" || generos.indexOf(genero) !== -1) {
+                $(this).fadeIn(300);
+                visibles++;
+            } else {
+                $(this).fadeOut(300);
+            }
+        });
+
+        $("#resultado").text(visibles + (visibles === 1 ? " DISCO" : " DISCOS"));
+
+        // AOS recalcula las posiciones cuando cambia el tamaño de la lista
+        setTimeout(function () {
+            AOS.refresh();
+        }, 350);
+    }
+
+    $(".filtro__opcion").on("click", function () {
+        filtrar($(this).data("genero"));
+        $(".filtro__boton").trigger("click");
+    });
+
+    // Los enlaces de GÉNEROS del pie (#pop, #jazz...) también filtran
+    function filtrarDesdeEnlace() {
+        var genero = window.location.hash.replace("#", "");
+        if ($('.filtro__opcion[data-genero="' + genero + '"]').length) {
+            filtrar(genero);
+        }
+    }
+
+    if (discos.length) {
+        // Al pulsar un género del pie, filtramos y subimos hasta el catálogo
+        $(window).on("hashchange", function () {
+            filtrarDesdeEnlace();
+            $("html, body").animate({ scrollTop: 0 }, 500);
+        });
+        // Si se llega desde la home con catalogo.html#pop, se filtra al cargar
+        filtrarDesdeEnlace();
+    }
 
 });

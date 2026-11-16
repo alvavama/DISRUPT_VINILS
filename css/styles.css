@@ -145,9 +145,11 @@ button {
     transition: background-color var(--transicion), color var(--transicion);
 }
 
-/* Hover: se invierte y pasa a negrita, como la variante de Figma */
+/* Hover y página actual (.boton--activo): se invierte y pasa a negrita,
+   como la variante de Figma */
 .boton:hover,
-.boton:focus-visible {
+.boton:focus-visible,
+.boton--activo {
     background-color: var(--color-oscuro);
     color: var(--color-claro);
     font-weight: 700;
@@ -897,6 +899,98 @@ button {
     letter-spacing: 0.06em;
 }
 
+/* ---------- Catálogo ---------- */
+/* Desplegable de filtro por género */
+.filtro {
+    position: relative;
+}
+
+.filtro__boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 2px solid var(--color-oscuro);
+    background-color: var(--color-claro);
+    font-family: var(--fuente-pixel);
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+    transition: background-color var(--transicion), color var(--transicion);
+}
+
+.filtro__boton:hover,
+.filtro__boton.abierto {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+}
+
+/* Icono de filtro: cuatro líneas cada vez más cortas */
+.filtro__icono {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.filtro__icono span {
+    display: block;
+    height: 2px;
+    background-color: currentColor;
+}
+
+.filtro__icono span:nth-child(1) { width: 23px; }
+.filtro__icono span:nth-child(2) { width: 17px; }
+.filtro__icono span:nth-child(3) { width: 13px; }
+.filtro__icono span:nth-child(4) { width: 9px; }
+
+/* Lista de géneros: oculta por defecto, jQuery la despliega */
+.filtro__lista {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 5;
+    min-width: 100%;
+    border: var(--borde) solid var(--color-oscuro);
+    background-color: var(--color-claro);
+}
+
+.filtro__lista li + li {
+    border-top: 1px solid var(--color-oscuro);
+}
+
+.filtro__opcion {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: var(--fuente-pixel);
+    font-size: 1.25rem;
+    text-align: left;
+    transition: background-color var(--transicion), color var(--transicion);
+}
+
+/* Clase "activo" (la añade jQuery): género seleccionado */
+.filtro__opcion:hover,
+.filtro__opcion:focus-visible,
+.filtro__opcion.activo {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+}
+
+.catalogo__resultado {
+    margin: -12px 0 32px;
+    color: var(--color-suave-oscuro);
+    font-size: 0.9375rem;
+    letter-spacing: 0.08em;
+}
+
+/* Lista de discos: una columna en móvil y tablet, dos en escritorio */
+.catalogo__lista {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 46px;
+}
+
 /* ---------- Tablet ---------- */
 @media (min-width: 768px) {
     :root {
@@ -1100,6 +1194,70 @@ button {
         max-width: 405px;
         align-self: flex-start;
         margin-right: 0;
+    }
+
+    /* Catálogo: dos columnas de discos con fichas compactas, como en Figma */
+    .filtro__boton {
+        min-height: 43px;
+        font-size: 1.7rem;
+    }
+
+    .catalogo__lista {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px 30px;
+    }
+
+    .disco--compacto {
+        grid-template-columns: 1fr 200px;
+        gap: 16px;
+    }
+
+    .disco--compacto .disco__media {
+        width: 66%;
+    }
+
+    .disco--compacto .ficha {
+        padding: 16px 14px;
+    }
+
+    .disco--compacto .ficha__titulo {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+
+    .disco--compacto .ficha__fila,
+    .disco--compacto .ficha__generos {
+        font-size: 0.8rem;
+    }
+
+    .disco--compacto .ficha__generos {
+        margin: 12px 0;
+    }
+
+    .disco--compacto .ficha__precio {
+        margin-bottom: 14px;
+        font-size: 0.85rem;
+    }
+
+    .disco--compacto .ficha__datos,
+    .disco--compacto .ficha__link {
+        font-size: 0.8rem;
+    }
+
+    .disco--compacto .acordeon__titulo {
+        min-height: 38px;
+        font-size: 0.9rem;
+    }
+
+    .disco--compacto .acordeon__titulo::after {
+        right: 12px;
+        width: 7px;
+        height: 7px;
+        margin-top: -5px;
+    }
+
+    .disco--compacto .acordeon__titulo.abierto::after {
+        margin-top: -1px;
     }
 
     .sobre {
