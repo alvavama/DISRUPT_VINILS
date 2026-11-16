@@ -777,6 +777,11 @@ button {
     gap: 40px;
     padding-bottom: 50px;
     border-bottom: 2px solid rgba(236, 236, 236, 0.25);
+    text-align: center;          /* en móvil todo el pie va centrado */
+}
+
+.pie__marca .logo {
+    justify-content: center;
 }
 
 .pie__marca p {
@@ -821,6 +826,7 @@ button {
     flex-direction: column;
     gap: 14px;
     max-width: 400px;
+    margin: 0 auto;
 }
 
 .newsletter__form input {
@@ -830,6 +836,7 @@ button {
     background: transparent;
     color: var(--color-claro);
     font: inherit;
+    text-align: center;
 }
 
 .newsletter__form input::placeholder {
@@ -872,6 +879,7 @@ button {
 .pie__bottom {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
     padding-top: 30px;
     color: var(--color-suave);
@@ -969,8 +977,22 @@ button {
         gap: 48px;
     }
 
+    /* A partir de tablet, el pie vuelve a alinearse a la izquierda */
     .pie__top {
         grid-template-columns: repeat(2, 1fr);
+        text-align: left;
+    }
+
+    .pie__marca .logo {
+        justify-content: flex-start;
+    }
+
+    .newsletter__form {
+        margin: 0;
+    }
+
+    .newsletter__form input {
+        text-align: left;
     }
 
     .pie__bottom {
