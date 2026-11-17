@@ -1233,6 +1233,42 @@ button {
   }
 }
 
+/* ---------- Escritorio con ratón: la ficha aparece con hover ----------
+   La ficha empieza oculta detrás de la portada. Al pasar el ratón por la
+   portada, jQuery añade la clase .activo al disco: el vinilo sale girando
+   y la ficha se desliza hacia la derecha. Sigue visible mientras el ratón
+   está sobre el disco o la ficha (y si la ficha está abierta con VER MÁS).
+   (hover: hover) deja fuera las pantallas táctiles, donde la ficha se ve siempre. */
+@media (min-width: 1024px) and (hover: hover) {
+  .disco__media {
+    z-index: 2;
+  }
+
+  .disco .ficha {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(-120px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.6s ease;
+  }
+
+  .disco.activo .ficha,
+  .disco:focus-within .ficha {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .disco.activo .disco__vinilo {
+    transform: translateX(52%);
+  }
+
+  .disco.activo .disco__vinilo-img {
+    animation-play-state: running;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

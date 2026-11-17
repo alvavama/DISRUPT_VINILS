@@ -45,10 +45,11 @@ $(document).ready(function () {
         var boton = $(this);
         var contenido = boton.prev(".acordeon__contenido");
 
-        // Cerramos las otras fichas abiertas
+        // Cerramos las otras fichas abiertas (y ocultamos su ficha en escritorio)
         $(".acordeon__titulo").not(boton).removeClass("abierto")
             .attr("aria-expanded", false).text("VER MÁS");
         $(".acordeon__contenido").not(contenido).slideUp(300);
+        $(".disco").not(boton.closest(".disco")).removeClass("activo");
 
         // Abrimos o cerramos esta ficha
         contenido.slideToggle(300);
@@ -58,6 +59,24 @@ $(document).ready(function () {
             boton.text("VER MENOS").attr("aria-expanded", true);
         } else {
             boton.text("VER MÁS").attr("aria-expanded", false);
+        }
+    });
+
+
+    /* ---------- 2b. FICHA QUE APARECE CON HOVER (escritorio) ----------
+       Al entrar en la portada, el disco recibe la clase "activo": el CSS
+       saca el vinilo girando y desliza la ficha. Al salir del disco
+       (portada + ficha) se quita, salvo que la ficha esté abierta. */
+    $(".disco .disco__media").on("mouseenter", function () {
+        $(this).closest(".disco").addClass("activo");
+    });
+
+    $(".disco").on("mouseleave", function () {
+        var abierta = $(this).find(".acordeon__titulo").hasClass("abierto");
+        if (!abierta) {
+            $(this).removeClass("activo");
+            // Quitamos el foco del botón para que la ficha se oculte también
+            $(this).find(":focus").trigger("blur");
         }
     });
 
