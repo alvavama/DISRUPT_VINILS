@@ -1,417 +1,916 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catálogo · Disrupt Vinils</title>
-    <meta name="description" content="Catálogo de vinilos de Disrupt Vinils: pop, jazz, trap y soul. Filtra por género y descubre cada disco.">
-    <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+    <meta
+      name="description"
+      content="Catálogo de vinilos de Disrupt Vinils: pop, jazz, trap y soul. Filtra por género y descubre cada disco."
+    />
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
 
-    <!-- Tipografía pixel: Bitcount Prop Single (Google Fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@400;600;700&amp;display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@400;600;700&amp;display=swap"
+    />
 
-    <!-- CSS de AOS, antes de styles.css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-    <!-- ============ CABECERA CON MENÚ RESPONSIVE ============ -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
     <header class="cabecera">
-        <div class="cabecera__barra">
-            <a href="index.html" class="logo" aria-label="Disrupt Vinils, ir a la home">
-                <span class="logo__icono">
-                    <svg class="logo__disco" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
-                        <rect width="64" height="64" fill="#1B1B1B"/>
-                        <circle cx="31.5" cy="32.5" r="26.5" fill="#ECECEC"/>
-                        <circle cx="31.5" cy="32.5" r="13.5" fill="#1B1B1B"/>
-                        <!-- Bandas que aparecen y giran al hacer hover -->
-                        <g class="logo__bandas">
-                            <path d="M53 32.5C53 20.6259 43.3741 11 31.5 11" stroke="#1B1B1B" stroke-width="13" fill="none"/>
-                            <path d="M31.5 54C19.6259 54 10 44.3741 10 32.5" stroke="#1B1B1B" stroke-width="13" fill="none"/>
-                        </g>
-                    </svg>
-                </span>
-                <span class="logo__nombre">DISRUPT VINILS</span>
-            </a>
+      <div class="cabecera__barra">
+        <a
+          href="index.html"
+          class="logo"
+          aria-label="Disrupt Vinils, ir a la home"
+        >
+          <span class="logo__icono">
+            <svg
+              class="logo__disco"
+              viewBox="0 0 64 64"
+              width="64"
+              height="64"
+              aria-hidden="true"
+            >
+              <rect width="64" height="64" fill="#1B1B1B" />
+              <circle cx="31.5" cy="32.5" r="26.5" fill="#ECECEC" />
+              <circle cx="31.5" cy="32.5" r="13.5" fill="#1B1B1B" />
 
-            <!-- Solo se ve en móvil y tablet -->
-            <button type="button" class="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+              <g class="logo__bandas">
+                <path
+                  d="M53 32.5C53 20.6259 43.3741 11 31.5 11"
+                  stroke="#1B1B1B"
+                  stroke-width="13"
+                  fill="none"
+                />
+                <path
+                  d="M31.5 54C19.6259 54 10 44.3741 10 32.5"
+                  stroke="#1B1B1B"
+                  stroke-width="13"
+                  fill="none"
+                />
+              </g>
+            </svg>
+          </span>
+          <span class="logo__nombre">DISRUPT VINILS</span>
+        </a>
 
-        <!-- En móvil y tablet está oculto hasta pulsar el botón -->
-        <nav class="menu" id="menu" aria-label="Navegación principal">
-            <a href="catalogo.html" class="boton boton--activo" aria-current="page">CATÁLOGO</a>
-            <a href="index.html#sobre-nosotros" class="boton">SOBRE NOSOTROS</a>
-        </nav>
+        <button
+          type="button"
+          class="menu-btn"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <nav class="menu" id="menu" aria-label="Navegación principal">
+        <a href="catalogo.html" class="boton boton--activo" aria-current="page"
+          >CATÁLOGO</a
+        >
+        <a href="index.html#sobre-nosotros" class="boton">SOBRE NOSOTROS</a>
+      </nav>
     </header>
 
     <main>
+      <section class="seccion seccion--clara catalogo" id="catalogo">
+        <div class="contenedor">
+          <div class="cabecera-seccion">
+            <h1 class="titulo-seccion" data-aos="fade-right">CATÁLOGO</h1>
 
-        <!-- ============ CATÁLOGO ============ -->
-        <!-- jQuery: el botón FILTRAR despliega la lista de géneros y filtra los discos.
-             Cada disco guarda sus géneros en data-generos (pueden ser varios, separados por espacios).
-             Las fichas usan el mismo acordeón "VER MÁS" que en la home -->
-        <section class="seccion seccion--clara catalogo" id="catalogo">
-            <div class="contenedor">
-                <div class="cabecera-seccion">
-                    <h1 class="titulo-seccion" data-aos="fade-right">CATÁLOGO</h1>
-
-                    <div class="filtro">
-                        <button type="button" class="filtro__boton" aria-expanded="false" aria-controls="filtro-lista">
-                            <span class="filtro__texto">FILTRAR</span>
-                            <span class="filtro__icono" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-                        </button>
-                        <ul class="filtro__lista" id="filtro-lista">
-                            <li><button type="button" class="filtro__opcion activo" data-genero="todos">TODOS</button></li>
-                            <li><button type="button" class="filtro__opcion" data-genero="pop">POP</button></li>
-                            <li><button type="button" class="filtro__opcion" data-genero="jazz">JAZZ</button></li>
-                            <li><button type="button" class="filtro__opcion" data-genero="trap">TRAP</button></li>
-                            <li><button type="button" class="filtro__opcion" data-genero="soul">SOUL</button></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <p class="catalogo__resultado" id="resultado" role="status" aria-live="polite">10 DISCOS</p>
-
-                <div class="catalogo__lista acordeon">
-
-                <article class="disco disco--compacto" data-generos="trap" data-aos="fade-up">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/utopia-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/utopia-portada.jpg" alt="Portada de Utopia, de Travis Scott" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">UTOPIA</h2>
-                        <p class="ficha__fila"><span>TRAVIS SCOTT</span><span>2023</span></p>
-                        <ul class="ficha__generos">
-                                <li>RAP</li>
-                                <li>TRAP</li>
-                                <li>PSICODELIA</li>
-                                <li>HIPHOP</li>
-                        </ul>
-                        <p class="ficha__precio">35€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>2 × LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo rojo</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Utopia%20Travis%20Scott" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="pop" data-aos="fade-up" data-aos-delay="150">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/bodhiria-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/bodhiria-portada.jpg" alt="Portada de Bodhiria, de Judeline" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">BODHIRIA</h2>
-                        <p class="ficha__fila"><span>JUDELINE</span><span>2024</span></p>
-                        <ul class="ficha__generos">
-                                <li>RAP</li>
-                                <li>UNDER</li>
-                                <li>INDIE</li>
-                                <li>POP</li>
-                        </ul>
-                        <p class="ficha__precio">24,95€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo blanco</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Bodhiria%20Judeline" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="trap pop" data-aos="fade-up">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/lamadruga-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/lamadruga-portada.jpg" alt="Portada de La Madrugá, de Delaossa" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">LA MADRUGÁ</h2>
-                        <p class="ficha__fila"><span>DELAOSSA</span><span>2025</span></p>
-                        <ul class="ficha__generos">
-                                <li>RAP</li>
-                                <li>TRAP</li>
-                                <li>ROCK</li>
-                                <li>POP</li>
-                        </ul>
-                        <p class="ficha__precio">45€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo blanco</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/La%20Madrug%C3%A1%20Delaossa" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="pop" data-aos="fade-up" data-aos-delay="150">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/lux-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/lux-portada.webp" alt="Portada de Lux, de Rosalía" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">LUX</h2>
-                        <p class="ficha__fila"><span>ROSALÍA</span><span>2025</span></p>
-                        <ul class="ficha__generos">
-                                <li>POP</li>
-                                <li>EXPERIMENTAL</li>
-                                <li>CLÁSICA</li>
-                        </ul>
-                        <p class="ficha__precio">39,99€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo transparente</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Lux%20Rosal%C3%ADa" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="trap pop" data-aos="fade-up">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/dtmf-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/dtmf-portada.jpeg" alt="Portada de DeBÍ TiRAR MáS FOToS, de Bad Bunny" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">DTMF</h2>
-                        <p class="ficha__fila"><span>BAD BUNNY</span><span>2025</span></p>
-                        <ul class="ficha__generos">
-                                <li>REGGAETÓN</li>
-                                <li>TRAP</li>
-                                <li>POP</li>
-                        </ul>
-                        <p class="ficha__precio">42€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>2 × LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo negro</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Deb%C3%AD%20Tirar%20M%C3%A1s%20Fotos%20Bad%20Bunny" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="jazz" data-aos="fade-up" data-aos-delay="150">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/kindofblue-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/kindofblue-portada.jpg" alt="Portada de Kind of Blue, de Miles Davis" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">KIND OF BLUE</h2>
-                        <p class="ficha__fila"><span>MILES DAVIS</span><span>1959</span></p>
-                        <ul class="ficha__generos">
-                                <li>JAZZ</li>
-                                <li>MODAL</li>
-                                <li>COOL</li>
-                        </ul>
-                        <p class="ficha__precio">29,95€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo negro</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Kind%20of%20Blue%20Miles%20Davis" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="jazz" data-aos="fade-up">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/alovesupreme-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/alovesupreme-portada.jpg" alt="Portada de A Love Supreme, de John Coltrane" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">A LOVE SUPREME</h2>
-                        <p class="ficha__fila"><span>JOHN COLTRANE</span><span>1965</span></p>
-                        <ul class="ficha__generos">
-                                <li>JAZZ</li>
-                                <li>SPIRITUAL</li>
-                                <li>HARD BOP</li>
-                        </ul>
-                        <p class="ficha__precio">27,50€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo negro</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/A%20Love%20Supreme%20John%20Coltrane" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="soul jazz" data-aos="fade-up" data-aos-delay="150">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/backtoblack-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/backtoblack-portada.jpg" alt="Portada de Back to Black, de Amy Winehouse" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">BACK TO BLACK</h2>
-                        <p class="ficha__fila"><span>AMY WINEHOUSE</span><span>2006</span></p>
-                        <ul class="ficha__generos">
-                                <li>SOUL</li>
-                                <li>R&amp;B</li>
-                                <li>JAZZ</li>
-                        </ul>
-                        <p class="ficha__precio">32€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo negro</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Back%20to%20Black%20Amy%20Winehouse" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="soul" data-aos="fade-up">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/whatsgoingon-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/whatsgoingon-portada.jpg" alt="Portada de What's Going On, de Marvin Gaye" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">WHAT'S GOING ON</h2>
-                        <p class="ficha__fila"><span>MARVIN GAYE</span><span>1971</span></p>
-                        <ul class="ficha__generos">
-                                <li>SOUL</li>
-                                <li>R&amp;B</li>
-                                <li>FUNK</li>
-                        </ul>
-                        <p class="ficha__precio">30€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo negro</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/What%27s%20Going%20On%20Marvin%20Gaye" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-                <article class="disco disco--compacto" data-generos="soul pop" data-aos="fade-up" data-aos-delay="150">
-                    <div class="disco__media">
-                        <span class="disco__vinilo"><img src="img/blonde-vinilo.png" alt="" class="disco__vinilo-img" loading="lazy"></span>
-                        <img src="img/blonde-portada.jpg" alt="Portada de Blonde, de Frank Ocean" class="disco__portada" loading="lazy">
-                    </div>
-                    <div class="ficha acordeon__item">
-                        <h2 class="ficha__titulo">BLONDE</h2>
-                        <p class="ficha__fila"><span>FRANK OCEAN</span><span>2016</span></p>
-                        <ul class="ficha__generos">
-                                <li>R&amp;B</li>
-                                <li>SOUL</li>
-                                <li>POP</li>
-                        </ul>
-                        <p class="ficha__precio">38€</p>
-                        <div class="acordeon__contenido">
-                            <dl class="ficha__datos">
-                                <div><dt>FORMATO</dt><dd>2 × LP 12"</dd></div>
-                                <div><dt>COLOR</dt><dd>Vinilo negro</dd></div>
-                                <div><dt>ESTADO</dt><dd>Nuevo</dd></div>
-                            </dl>
-                            <a class="ficha__link" href="https://open.spotify.com/search/Blonde%20Frank%20Ocean" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY ↗</a>
-                        </div>
-                        <button type="button" class="acordeon__titulo" aria-expanded="false">VER MÁS</button>
-                    </div>
-                </article>
-
-                </div>
+            <div class="filtro">
+              <button
+                type="button"
+                class="filtro__boton"
+                aria-expanded="false"
+                aria-controls="filtro-lista"
+              >
+                <span class="filtro__texto">FILTRAR</span>
+                <span class="filtro__icono" aria-hidden="true"
+                  ><span></span><span></span><span></span><span></span
+                ></span>
+              </button>
+              <ul class="filtro__lista" id="filtro-lista">
+                <li>
+                  <button
+                    type="button"
+                    class="filtro__opcion activo"
+                    data-genero="todos"
+                  >
+                    TODOS
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="filtro__opcion"
+                    data-genero="pop"
+                  >
+                    POP
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="filtro__opcion"
+                    data-genero="jazz"
+                  >
+                    JAZZ
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="filtro__opcion"
+                    data-genero="trap"
+                  >
+                    TRAP
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="filtro__opcion"
+                    data-genero="soul"
+                  >
+                    SOUL
+                  </button>
+                </li>
+              </ul>
             </div>
-        </section>
+          </div>
 
+          <p
+            class="catalogo__resultado"
+            id="resultado"
+            role="status"
+            aria-live="polite"
+          >
+            10 DISCOS
+          </p>
+
+          <div class="catalogo__lista acordeon">
+            <article
+              class="disco disco--compacto"
+              data-generos="trap"
+              data-aos="fade-up"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/utopia-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/utopia-portada.jpg"
+                  alt="Portada de Utopia, de Travis Scott"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">UTOPIA</h2>
+                <p class="ficha__fila">
+                  <span>TRAVIS SCOTT</span><span>2023</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>RAP</li>
+                  <li>TRAP</li>
+                  <li>PSICODELIA</li>
+                  <li>HIPHOP</li>
+                </ul>
+                <p class="ficha__precio">35€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>2 × LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo rojo</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Utopia%20Travis%20Scott"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="pop"
+              data-aos="fade-up"
+              data-aos-delay="150"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/bodhiria-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/bodhiria-portada.jpg"
+                  alt="Portada de Bodhiria, de Judeline"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">BODHIRIA</h2>
+                <p class="ficha__fila">
+                  <span>JUDELINE</span><span>2024</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>RAP</li>
+                  <li>UNDER</li>
+                  <li>INDIE</li>
+                  <li>POP</li>
+                </ul>
+                <p class="ficha__precio">24,95€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo blanco</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Bodhiria%20Judeline"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="trap pop"
+              data-aos="fade-up"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/lamadruga-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/lamadruga-portada.jpg"
+                  alt="Portada de La Madrugá, de Delaossa"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">LA MADRUGÁ</h2>
+                <p class="ficha__fila">
+                  <span>DELAOSSA</span><span>2025</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>RAP</li>
+                  <li>TRAP</li>
+                  <li>ROCK</li>
+                  <li>POP</li>
+                </ul>
+                <p class="ficha__precio">45€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo blanco</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/La%20Madrug%C3%A1%20Delaossa"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="pop"
+              data-aos="fade-up"
+              data-aos-delay="150"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/lux-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/lux-portada.webp"
+                  alt="Portada de Lux, de Rosalía"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">LUX</h2>
+                <p class="ficha__fila"><span>ROSALÍA</span><span>2025</span></p>
+                <ul class="ficha__generos">
+                  <li>POP</li>
+                  <li>EXPERIMENTAL</li>
+                  <li>CLÁSICA</li>
+                </ul>
+                <p class="ficha__precio">39,99€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo transparente</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Lux%20Rosal%C3%ADa"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="trap pop"
+              data-aos="fade-up"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/dtmf-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/dtmf-portada.jpeg"
+                  alt="Portada de DeBÍ TiRAR MáS FOToS, de Bad Bunny"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">DTMF</h2>
+                <p class="ficha__fila">
+                  <span>BAD BUNNY</span><span>2025</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>REGGAETÓN</li>
+                  <li>TRAP</li>
+                  <li>POP</li>
+                </ul>
+                <p class="ficha__precio">42€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>2 × LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo negro</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Deb%C3%AD%20Tirar%20M%C3%A1s%20Fotos%20Bad%20Bunny"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="jazz"
+              data-aos="fade-up"
+              data-aos-delay="150"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/kindofblue-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/kindofblue-portada.jpg"
+                  alt="Portada de Kind of Blue, de Miles Davis"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">KIND OF BLUE</h2>
+                <p class="ficha__fila">
+                  <span>MILES DAVIS</span><span>1959</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>JAZZ</li>
+                  <li>MODAL</li>
+                  <li>COOL</li>
+                </ul>
+                <p class="ficha__precio">29,95€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo negro</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Kind%20of%20Blue%20Miles%20Davis"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="jazz"
+              data-aos="fade-up"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/alovesupreme-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/alovesupreme-portada.jpg"
+                  alt="Portada de A Love Supreme, de John Coltrane"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">A LOVE SUPREME</h2>
+                <p class="ficha__fila">
+                  <span>JOHN COLTRANE</span><span>1965</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>JAZZ</li>
+                  <li>SPIRITUAL</li>
+                  <li>HARD BOP</li>
+                </ul>
+                <p class="ficha__precio">27,50€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo negro</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/A%20Love%20Supreme%20John%20Coltrane"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="soul jazz"
+              data-aos="fade-up"
+              data-aos-delay="150"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/backtoblack-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/backtoblack-portada.jpg"
+                  alt="Portada de Back to Black, de Amy Winehouse"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">BACK TO BLACK</h2>
+                <p class="ficha__fila">
+                  <span>AMY WINEHOUSE</span><span>2006</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>SOUL</li>
+                  <li>R&amp;B</li>
+                  <li>JAZZ</li>
+                </ul>
+                <p class="ficha__precio">32€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo negro</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Back%20to%20Black%20Amy%20Winehouse"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="soul"
+              data-aos="fade-up"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/whatsgoingon-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/whatsgoingon-portada.jpg"
+                  alt="Portada de What's Going On, de Marvin Gaye"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">WHAT'S GOING ON</h2>
+                <p class="ficha__fila">
+                  <span>MARVIN GAYE</span><span>1971</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>SOUL</li>
+                  <li>R&amp;B</li>
+                  <li>FUNK</li>
+                </ul>
+                <p class="ficha__precio">30€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo negro</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/What%27s%20Going%20On%20Marvin%20Gaye"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+            <article
+              class="disco disco--compacto"
+              data-generos="soul pop"
+              data-aos="fade-up"
+              data-aos-delay="150"
+            >
+              <div class="disco__media">
+                <span class="disco__vinilo"
+                  ><img
+                    src="img/blonde-vinilo.png"
+                    alt=""
+                    class="disco__vinilo-img"
+                    loading="lazy"
+                /></span>
+                <img
+                  src="img/blonde-portada.jpg"
+                  alt="Portada de Blonde, de Frank Ocean"
+                  class="disco__portada"
+                  loading="lazy"
+                />
+              </div>
+              <div class="ficha acordeon__item">
+                <h2 class="ficha__titulo">BLONDE</h2>
+                <p class="ficha__fila">
+                  <span>FRANK OCEAN</span><span>2016</span>
+                </p>
+                <ul class="ficha__generos">
+                  <li>R&amp;B</li>
+                  <li>SOUL</li>
+                  <li>POP</li>
+                </ul>
+                <p class="ficha__precio">38€</p>
+                <div class="acordeon__contenido">
+                  <dl class="ficha__datos">
+                    <div>
+                      <dt>FORMATO</dt>
+                      <dd>2 × LP 12"</dd>
+                    </div>
+                    <div>
+                      <dt>COLOR</dt>
+                      <dd>Vinilo negro</dd>
+                    </div>
+                    <div>
+                      <dt>ESTADO</dt>
+                      <dd>Nuevo</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="ficha__link"
+                    href="https://open.spotify.com/search/Blonde%20Frank%20Ocean"
+                    target="_blank"
+                    rel="noopener"
+                    >ESCUCHAR EN SPOTIFY ↗</a
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="acordeon__titulo"
+                  aria-expanded="false"
+                >
+                  VER MÁS
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- ============ PIE ============ -->
     <footer class="pie">
-        <div class="contenedor">
-            <div class="pie__top">
-                <div class="pie__marca">
-                    <a href="index.html" class="logo logo--invertido" aria-label="Disrupt Vinils, ir a la home">
-                        <span class="logo__icono">
-                            <svg class="logo__disco" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
-                                <rect width="64" height="64" fill="#1B1B1B"/>
-                                <circle cx="31.5" cy="32.5" r="26.5" fill="#ECECEC"/>
-                                <circle cx="31.5" cy="32.5" r="13.5" fill="#1B1B1B"/>
-                                <!-- Bandas que aparecen y giran al hacer hover -->
-                                <g class="logo__bandas">
-                                    <path d="M53 32.5C53 20.6259 43.3741 11 31.5 11" stroke="#1B1B1B" stroke-width="13" fill="none"/>
-                                    <path d="M31.5 54C19.6259 54 10 44.3741 10 32.5" stroke="#1B1B1B" stroke-width="13" fill="none"/>
-                                </g>
-                            </svg>
-                        </span>
-                        <span class="logo__nombre">DISRUPT VINILS</span>
-                    </a>
-                    <p>Tienda de vinilos independiente · Madrid</p>
-                </div>
+      <div class="contenedor">
+        <div class="pie__top">
+          <div class="pie__marca">
+            <a
+              href="index.html"
+              class="logo logo--invertido"
+              aria-label="Disrupt Vinils, ir a la home"
+            >
+              <span class="logo__icono">
+                <svg
+                  class="logo__disco"
+                  viewBox="0 0 64 64"
+                  width="64"
+                  height="64"
+                  aria-hidden="true"
+                >
+                  <rect width="64" height="64" fill="#1B1B1B" />
+                  <circle cx="31.5" cy="32.5" r="26.5" fill="#ECECEC" />
+                  <circle cx="31.5" cy="32.5" r="13.5" fill="#1B1B1B" />
 
-                <nav class="pie__col" aria-label="Navegación del pie">
-                    <h2>NAVEGA</h2>
-                    <ul>
-                        <li><a href="index.html">HOME</a></li>
-                        <li><a href="catalogo.html" aria-current="page">CATÁLOGO</a></li>
-                        <li><a href="index.html#sobre-nosotros">SOBRE NOSOTROS</a></li>
-                    </ul>
-                </nav>
+                  <g class="logo__bandas">
+                    <path
+                      d="M53 32.5C53 20.6259 43.3741 11 31.5 11"
+                      stroke="#1B1B1B"
+                      stroke-width="13"
+                      fill="none"
+                    />
+                    <path
+                      d="M31.5 54C19.6259 54 10 44.3741 10 32.5"
+                      stroke="#1B1B1B"
+                      stroke-width="13"
+                      fill="none"
+                    />
+                  </g>
+                </svg>
+              </span>
+              <span class="logo__nombre">DISRUPT VINILS</span>
+            </a>
+            <p>Tienda de vinilos independiente · Madrid</p>
+          </div>
 
-                <nav class="pie__col" aria-label="Géneros">
-                    <h2>GÉNEROS</h2>
-                    <ul>
-                        <li><a href="#pop">POP</a></li>
-                        <li><a href="#jazz">JAZZ</a></li>
-                        <li><a href="#trap">TRAP</a></li>
-                        <li><a href="#soul">SOUL</a></li>
-                    </ul>
-                </nav>
+          <nav class="pie__col" aria-label="Navegación del pie">
+            <h2>NAVEGA</h2>
+            <ul>
+              <li><a href="index.html">HOME</a></li>
+              <li><a href="catalogo.html" aria-current="page">CATÁLOGO</a></li>
+              <li><a href="index.html#sobre-nosotros">SOBRE NOSOTROS</a></li>
+            </ul>
+          </nav>
 
-                <!-- jQuery: validación del formulario -->
-                <div class="pie__col newsletter">
-                    <h2>NEWSLETTER</h2>
-                    <p>NOVEDADES Y EVENTOS</p>
-                    <form class="newsletter__form" id="newsletter" novalidate>
-                        <label for="email" class="oculto">Tu email</label>
-                        <input type="email" id="email" name="email" placeholder="tu@email.com" autocomplete="email">
-                        <button type="submit">SUSCRIBIRME</button>
-                        <p class="newsletter__mensaje" id="newsletter-mensaje" role="status" aria-live="polite"></p>
-                    </form>
-                </div>
-            </div>
+          <nav class="pie__col" aria-label="Géneros">
+            <h2>GÉNEROS</h2>
+            <ul>
+              <li><a href="#pop">POP</a></li>
+              <li><a href="#jazz">JAZZ</a></li>
+              <li><a href="#trap">TRAP</a></li>
+              <li><a href="#soul">SOUL</a></li>
+            </ul>
+          </nav>
 
-            <div class="pie__bottom">
-                <p>© 2026 DISRUPT VINILS · MADRID</p>
-                <ul class="pie__redes">
-                    <li><a href="https://www.instagram.com" target="_blank" rel="noopener">INSTAGRAM</a></li>
-                    <li><a href="https://www.tiktok.com" target="_blank" rel="noopener">TIKTOK</a></li>
-                    <li><a href="https://open.spotify.com" target="_blank" rel="noopener">SPOTIFY</a></li>
-                </ul>
-            </div>
+          <div class="pie__col newsletter">
+            <h2>NEWSLETTER</h2>
+            <p>NOVEDADES Y EVENTOS</p>
+            <form class="newsletter__form" id="newsletter" novalidate>
+              <label for="email" class="oculto">Tu email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="tu@email.com"
+                autocomplete="email"
+              />
+              <button type="submit">SUSCRIBIRME</button>
+              <p
+                class="newsletter__mensaje"
+                id="newsletter-mensaje"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
+          </div>
         </div>
+
+        <div class="pie__bottom">
+          <p>© 2026 DISRUPT VINILS · MADRID</p>
+          <ul class="pie__redes">
+            <li>
+              <a href="https://www.instagram.com" target="_blank" rel="noopener"
+                >INSTAGRAM</a
+              >
+            </li>
+            <li>
+              <a href="https://www.tiktok.com" target="_blank" rel="noopener"
+                >TIKTOK</a
+              >
+            </li>
+            <li>
+              <a href="https://open.spotify.com" target="_blank" rel="noopener"
+                >SPOTIFY</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
     </footer>
 
-    <!-- Scripts, en este orden: jQuery, AOS, Typed.js y por último nuestro script -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="js/script.js"></script>
-
-</body>
+  </body>
 </html>
